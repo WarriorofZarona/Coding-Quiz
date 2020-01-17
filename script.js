@@ -45,7 +45,7 @@ var question3 = "Arrays in Javascript can be used to store ______.";
 var question4 = "String values must be enclosed within ______ when being assigned to variables.";
 var question5 = "A very useful tool used during development and debugging for printing content to the debugger is:";
 
-var questionList [question1, question2, question3, question4, question5];
+var questionList = [question1, question2, question3, question4, question5];
 
 document.getElementById("start-quiz").addEventListener("click", function (event) {
 

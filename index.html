@@ -6,36 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Coding Quiz</title>
-    <script src="script.js"></script>
     <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+
+    <script src="script.js"></script>
     <!-- 
     Add the content that the user will initially see.-->
     <!-- 
     View High Scores link on the top right -->
+    <header>
+        <div id="high-scores">View High Scores</div>
 
-    <div id=high-scores>View High Scores</div>
+        <!-- Timer that says 0 on the top right -->
 
-    <!-- Timer that says 0 on the top right -->
+        <div id="timer">Timer: 0</div>
 
-    <div id=timer>Timer: 0</div>
+    </header>
+
     <!-- 
     A header with the title -->
+    <div class="content">
 
-    <h1 class=header>Coding Quiz Challenge</h1>
-    <!-- 
+        <h1 class="heading">Coding Quiz Challenge</h1>
+        <!-- 
     Description -->
 
-    <p>Try to answer the following code-related questions within the time limit. Keep in mind that incorrect answers
-        will penalize your scoretime by ten seconds!
-    </p>
-    <!-- 
+        <p id="description">Try to answer the following code-related questions within the time limit. Keep in mind that
+            incorrect answers
+            will penalize your scoretime by ten seconds!
+        </p>
+        <!-- 
     Button to start quiz -->
 
-    <button type="button" id="start-quiz">Start Quiz</button>
-
+        <button type="button" id="start-quiz">Start Quiz</button>
+    </div>
 
 </body>
 

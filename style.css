@@ -15,7 +15,7 @@ body {
     right: .5%;
 }
 
-.content {
+#content {
     margin: 5% auto;
     text-align: center;
     width: 35%;

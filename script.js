@@ -47,11 +47,48 @@ var question5 = "A very useful tool used during development and debugging for pr
 
 var questionList = [question1, question2, question3, question4, question5];
 
-document.getElementById("start-quiz").addEventListener("click", function (event) {
+var answer1 = {
+    true: "Alerts",
+    false: ["Booleans", "Strings", "Numbers"]
+}
+var answer2 = {
+    true: "Parentheses",
+    false: ["Quotes", "Curly Brackets", "Square Brackets"]
+}
 
-    event.preventDefault;
+var answer3 = {
+    true: "All of the above",
+    false: ["Numbers and strings", "Other Arrays", "Booleans"]
+}
+
+var answer4 = {
+
+    true: "Quotes",
+    false: ["Curly Brackets", "Commas", "Parentheses"]
+}
+
+var answer5 = {
+
+    true: "console.log",
+    false: ["Javascript", "Terminal/bash", "For loops"]
+
+}
+
+var quiz = {
+    question1: answer1,
+    question2: answer2,
+    question3: answer3,
+    question4: answer4,
+    question5: answer5
+}
+
+var answerList =
+
+    document.getElementById("start-quiz").addEventListener("click", function (event) {
+
+        event.preventDefault;
 
 
 
-});
+    });
 

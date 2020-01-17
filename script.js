@@ -1,7 +1,6 @@
-// Create elements
+// Create variable references
 var headerEl = document.getElementById("top");
 var contentId = document.getElementById("content");
-var countdown = 0;
 
 // This function will handle the basic creation of an element, one attribute, and text content
 function createElement(a, b, c, d) {
@@ -14,8 +13,8 @@ function createElement(a, b, c, d) {
 // This function will be used to append the Child.
 function appendChild(x, y) {
 
-    var x = x.appendChild(y);
-    return x;
+    var tmp = x.appendChild(y);
+    return tmp;
 };
 
 // Creating View Highscore
@@ -23,6 +22,7 @@ var highScoreDiv = createElement("div", "id", "high-scores", "View Highscores");
 appendChild(headerEl, highScoreDiv);
 
 //Creating Timer
+var countdown = 0;
 var timerDiv = createElement("div", "id", "timer", "Timer: " + countdown);
 appendChild(headerEl, timerDiv);
 

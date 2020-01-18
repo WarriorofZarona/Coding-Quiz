@@ -60,22 +60,55 @@ appendChild(contentId, startButton);
 
 // Data for quiz starts here
 // Questions
-var question1 = "Commonly used data types do NOT include:";
-var question2 = "The condition of an if/else statement is enclosed within ______.";
-var question3 = "Arrays in Javascript can be used to store ______.";
-var question4 = "String values must be enclosed within ______ when being assigned to variables.";
-var question5 = "A very useful tool used during development and debugging for printing content to the debugger is:";
+var question1 = {
+    text: "Commonly used data types do NOT include:",
+    choices: ["Booleans", "Alerts", "Strings", "Numbers"],
+    correctAnswer: "Alerts"
+};
+
+var question2 = {
+
+    text: "The condition of an if/else statement is enclosed within ______.",
+    choices: ["Quotes", "Curly Brackets", "Parentheses", "Square Brackets"],
+    correctAnswer: "Parentheses"
+};
+
+var question3 = {
+    text: "Arrays in Javascript can be used to store ______.",
+    choices: ["Numbers and strings", "Other Arrays", "Booleans", "All of the above",],
+    correctAnswer: "All of the above"
+};
+
+var question4 = {
+    text: "String values must be enclosed within ______ when being assigned to variables.",
+    choices: ["Quotes", "Curly Brackets", "Commas", "Parentheses"],
+    correctAnswer: "Quotes"
+};
+
+var question5 = {
+    text: "A very useful tool used during development and debugging for printing content to the debugger is:",
+    choices: ["Javascript", "console.log", "Terminal/bash", "For loops"],
+    correctAnswer: "console.log"
+};
 
 var questionList = [question1, question2, question3, question4, question5];
 
 // Answers
-var answer1 = ["Booleans", "Alerts", "Strings", "Numbers"];
-var answer2 = ["Quotes", "Curly Brackets", "Parentheses", "Square Brackets"]
-var answer3 = ["Numbers and strings", "Other Arrays", "Booleans", "All of the above",]
-var answer4 = ["Quotes", "Curly Brackets", "Commas", "Parentheses"]
-var answer5 = ["Javascript", "console.log", "Terminal/bash", "For loops"]
+// var answer1 = ["Booleans", "Alerts", "Strings", "Numbers"], "Alerts"];
+// var answer2 = [["Quotes", "Curly Brackets", "Parentheses", "Square Brackets"], "Parentheses"]
+// var answer3 = [["Numbers and strings", "Other Arrays", "Booleans", "All of the above",], "All of the above"]
+// var answer4 = [["Quotes", "Curly Brackets", "Commas", "Parentheses"], "Quotes"]
+// var answer5 = [["Javascript", "console.log", "Terminal/bash", "For loops"], "console.log"]
 
-var answerList = [answer1, answer2, answer3, answer4, answer5];
+// var answerList = [answer1, answer2, answer3, answer4, answer5];
+
+// var quiz = {
+
+//     text: questionList[i],
+//     choices: answer1[i],
+//     correctAnswer: "Alerts",
+
+// }
 
 document.getElementById("start-quiz").addEventListener("click", function (event) {
 
@@ -97,6 +130,7 @@ document.getElementById("start-quiz").addEventListener("click", function (event)
     }
 
     function addAnswers(x) {
+
         document.getElementById("1").textContent = "1 - " + (x)[0];
         document.getElementById("2").textContent = "2 - " + (x)[1];
         document.getElementById("3").textContent = "3 - " + (x)[2];
@@ -108,17 +142,14 @@ document.getElementById("start-quiz").addEventListener("click", function (event)
 
     var score = 0;
 
-    function correctAnswer(x) {
-        if (x) {
-            score++;
-
-        }
-
-        else {
+    // function correctAnswer(x) {
+    //     contentId.addEventListener("click", function (event) {
+    //         event.preventDefault;
+    //         if (event.target.matches(".answers")) {
 
 
-        }
-    }
+    //         };
+
 
     // Timer countdown
 
@@ -144,15 +175,16 @@ document.getElementById("start-quiz").addEventListener("click", function (event)
 
         // Goes to the next question
     };
+    var index = 0;
+
     function askQuestion() {
 
-        var index = 0;
 
         document.getElementById("heading").textContent = questionList[index];
         document.querySelector("#description").style.display = "none";
         document.querySelector("#start-quiz").style.display = "none";
         addButtons();
-        addAnswers(answerList[index]);
+        addAnswers((answerList[index][0]));
 
 
     }

@@ -3,6 +3,10 @@ body {
     height: 100%;
 }
 
+#top {
+    color: rebeccapurple
+}
+
 #high-scores {
     position: absolute;
     top: 0;

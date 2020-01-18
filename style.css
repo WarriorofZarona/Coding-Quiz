@@ -7,14 +7,16 @@ body {
     color: rebeccapurple
 }
 
-#high-scores {
+.top-position {
     position: absolute;
+}
+
+#high-scores {
     top: 0;
     left: .5%;
 }
 
 #timer {
-    position: absolute;
     top: 0;
     right: .5%;
 }
@@ -30,4 +32,9 @@ button {
     background-color: #ae2ac8;
     color: white;
     padding: 5px;
+    margin: 1%;
+}
+
+.answers {
+    display: block;
 }

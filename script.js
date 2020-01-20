@@ -11,11 +11,11 @@ function createElement(element, type, value, text) {
 };
 
 //This function will create buttons for answer later
-function createButton(num) {
+function createButton(idValue) {
     var tmp = document.createElement("button");
     tmp.setAttribute("type", "button");
     tmp.setAttribute("class", "answers")
-    tmp.setAttribute("id", num);
+    tmp.setAttribute("id", idValue);
     return tmp;
 
 };
@@ -30,6 +30,24 @@ function appendChild(location, element) {
     var tmp = location.appendChild(element);
     return tmp;
 };
+
+function addAnswers(choices) {
+    appendChild(contentId, button0);
+    appendChild(contentId, button1);
+    appendChild(contentId, button2);
+    appendChild(contentId, button3);
+
+
+    for (var i = 0; i < choices.length; i++) {
+
+        document.getElementById("btn" + i).textContent = choices[i];
+
+
+    }
+
+
+
+}
 
 // Creating View Highscore
 var highScoreDiv = createElement("div", "id", "high-scores", "View Highscores");
@@ -62,149 +80,128 @@ appendChild(contentId, startButton);
 // Questions
 var question1 = {
     text: "Commonly used data types do NOT include:",
-    choices: ["Booleans", "Alerts", "Strings", "Numbers"],
-    correctAnswer: "Alerts"
+    choices: ["1 - Booleans", "2 - Alerts", "3 - Strings", "4 - Numbers"],
+    correctAnswer: "2 - Alerts"
 };
 
 var question2 = {
 
     text: "The condition of an if/else statement is enclosed within ______.",
-    choices: ["Quotes", "Curly Brackets", "Parentheses", "Square Brackets"],
-    correctAnswer: "Parentheses"
+    choices: ["1 - Quotes", "2 - Curly Brackets", "3 - Parentheses", "4 - Square Brackets"],
+    correctAnswer: "3 - Parentheses"
 };
 
 var question3 = {
     text: "Arrays in Javascript can be used to store ______.",
-    choices: ["Numbers and strings", "Other Arrays", "Booleans", "All of the above",],
-    correctAnswer: "All of the above"
+    choices: ["1 - Numbers and strings", "2 - Other Arrays", "3 - Booleans", "4 - All of the above",],
+    correctAnswer: "4 - All of the above"
 };
 
 var question4 = {
     text: "String values must be enclosed within ______ when being assigned to variables.",
-    choices: ["Quotes", "Curly Brackets", "Commas", "Parentheses"],
-    correctAnswer: "Quotes"
+    choices: ["1 - Quotes", "2 - Curly Brackets", "3 - Commas", "4 - Parentheses"],
+    correctAnswer: "1 - Quotes"
 };
 
 var question5 = {
     text: "A very useful tool used during development and debugging for printing content to the debugger is:",
-    choices: ["Javascript", "console.log", "Terminal/bash", "For loops"],
-    correctAnswer: "console.log"
+    choices: ["1 - Javascript", "2 - console.log", "3 - Terminal/bash", "4 - For loops"],
+    correctAnswer: "2 - console.log"
 };
 
 var questionList = [question1, question2, question3, question4, question5];
 
 // }
+var button0 = createButton("btn0");
+var button1 = createButton("btn1");
+var button2 = createButton("btn2");
+var button3 = createButton("btn3");
+
+var score = 0;
+var index = 0;
+var wrongAnswer = 10;
+
+
+
+
+// function clearQuestion() {
+
+
+
+// }
+
+
+
+// Timer countdown
+
+function setTime() {
+    var timerInterval = setInterval(function () {
+
+        countDown--;
+        countDownSpan.textContent = countDown;
+
+        if (countDown === 0) {
+            clearInterval(timerInterval);
+            gameOver()
+        }
+
+    }, 1000);
+};
+
+// When the timer hits 0
+
+function gameOver() {
+
+    // Goes to the next question
+};
+
+function quiz(questionId) {
+
+    document.getElementById("heading").textContent = questionList[questionId].text;
+    addAnswers(questionList[questionId].choices);
+
+
+
+
+
+};
+
+function selection() {
+
+    if (event.target.matches(".answers")) {
+        for (var i = 0; i < questionList[questionId].choices.length; i++) {
+
+            if (document.getElementById("btn" + i).textContent === questionList[questionId].correctAnswer) {
+
+
+                score++;
+                console.log(score);
+
+            }
+        }
+    }
+
+
+
+};
+
+
+// };
 
 document.getElementById("content").addEventListener("click", function (event) {
 
+    if (event.target.matches("#start-quiz")) {
 
-    event.preventDefault;
+        event.preventDefault;
 
-    var button1 = createButton("1");
-    var button2 = createButton("2");
-    var button3 = createButton("3");
-    var button4 = createButton("4");
-
-    var score = 0;
-    var index = 0;
-    countDown = 75;
-    var wrongAnswer = 10;
-    countDownSpan.textContent = countDown;
-
-
-    function addButtons() {
-        appendChild(contentId, button1);
-        appendChild(contentId, button2);
-        appendChild(contentId, button3);
-        appendChild(contentId, button4);
-
-    }
-
-    function addAnswers(choices) {
-
-        for (var i = 0; i < choices.length; i++) {
-
-            document.getElementById(i + 1).textContent = i + 1 + " - " + choices[i];
-
-        }
-
-
-    }
-
-    function checkAnswer() {
-
-        if (document.querySelectorAll(".answers").clicked && questionList[index].correctAnswer) {
-            score++
-            console.log(score);
-            index++
-
-
-        }
-        else {
-
-            countDown = countDown - 10;
-            index++
-
-
-        }
-
-    }
-
-    function clearQuestion() {
-
-
-
-    }
-
-
-
-    // Timer countdown
-
-    function setTime() {
-        var timerInterval = setInterval(function () {
-            countDown--;
-            countDownSpan.textContent = countDown;
-
-            if (countDown === 0) {
-                clearInterval(timerInterval);
-                gameOver()
-            }
-
-        }, 1000);
-    };
-
-    // When the timer hits 0
-
-    function gameOver() {
-
-        // Goes to the next question
-    };
-
-    function askQuestion() {
-
-
-        document.getElementById("heading").textContent = questionList[index].text;
-        addButtons();
-        addAnswers(questionList[index].choices);
-
-
-    }
-
-    if (event.target.matches("button")) {
-
+        countDown = 75;
+        countDownSpan.textContent = countDown;
         document.querySelector("#description").style.display = "none";
         document.querySelector("#start-quiz").style.display = "none";
         contentId.style.textAlign = "left";
         setTime();
-
-        for (var i = 0; i < questionList.length; i++) {
-
-            if (i === index) { continue }
-
-        }
-        askQuestion();
+        quiz(0);
+        selection();
     }
 
 });
-
-

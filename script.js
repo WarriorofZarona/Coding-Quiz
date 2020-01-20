@@ -15,7 +15,7 @@ function createButton(num) {
     var tmp = document.createElement("button");
     tmp.setAttribute("type", "button");
     tmp.setAttribute("class", "answers")
-    tmp.setAttribute("id", x);
+    tmp.setAttribute("id", num);
     return tmp;
 
 };
@@ -134,12 +134,12 @@ document.getElementById("content").addEventListener("click", function (event) {
 
     }
 
-    function addAnswers(x) {
+    function addAnswers(choices) {
 
-        document.getElementById("1").textContent = "1 - " + (x)[0];
-        document.getElementById("2").textContent = "2 - " + (x)[1];
-        document.getElementById("3").textContent = "3 - " + (x)[2];
-        document.getElementById("4").textContent = "4 - " + (x)[3];
+        document.getElementById("1").textContent = "1 - " + (choices)[0];
+        document.getElementById("2").textContent = "2 - " + (choices)[1];
+        document.getElementById("3").textContent = "3 - " + (choices)[2];
+        document.getElementById("4").textContent = "4 - " + (choices)[3];
 
 
 

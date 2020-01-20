@@ -20,14 +20,14 @@ function createButton(num) {
 
 };
 
-function topPosition(id) {
-    id.setAttribute("class", "top-position");
+function topPosition(element) {
+    element.setAttribute("class", "top-position");
 }
 
 // This function will be used to append the Child.
-function appendChild(id, element) {
+function appendChild(location, element) {
 
-    var tmp = id.appendChild(element);
+    var tmp = location.appendChild(element);
     return tmp;
 };
 
@@ -136,11 +136,11 @@ document.getElementById("content").addEventListener("click", function (event) {
 
     function addAnswers(choices) {
 
-        document.getElementById("1").textContent = "1 - " + (choices)[0];
-        document.getElementById("2").textContent = "2 - " + (choices)[1];
-        document.getElementById("3").textContent = "3 - " + (choices)[2];
-        document.getElementById("4").textContent = "4 - " + (choices)[3];
+        for (var i = 0; i < choices.length; i++) {
 
+            document.getElementById(i + 1).textContent = i + 1 + " - " + choices[i];
+
+        }
 
 
     }
@@ -182,7 +182,7 @@ document.getElementById("content").addEventListener("click", function (event) {
 
         document.getElementById("heading").textContent = questionList[index].text;
         addButtons();
-        addAnswers((answerList[index][0]));
+        addAnswers(questionList[index].choices);
 
 
     }

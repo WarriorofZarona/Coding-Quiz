@@ -93,21 +93,6 @@ var question5 = {
 
 var questionList = [question1, question2, question3, question4, question5];
 
-// Answers
-// var answer1 = ["Booleans", "Alerts", "Strings", "Numbers"], "Alerts"];
-// var answer2 = [["Quotes", "Curly Brackets", "Parentheses", "Square Brackets"], "Parentheses"]
-// var answer3 = [["Numbers and strings", "Other Arrays", "Booleans", "All of the above",], "All of the above"]
-// var answer4 = [["Quotes", "Curly Brackets", "Commas", "Parentheses"], "Quotes"]
-// var answer5 = [["Javascript", "console.log", "Terminal/bash", "For loops"], "console.log"]
-
-// var answerList = [answer1, answer2, answer3, answer4, answer5];
-
-// var quiz = {
-
-//     text: questionList[i],
-//     choices: answer1[i],
-//     correctAnswer: "Alerts",
-
 // }
 
 document.getElementById("content").addEventListener("click", function (event) {
@@ -123,6 +108,7 @@ document.getElementById("content").addEventListener("click", function (event) {
     var score = 0;
     var index = 0;
     countDown = 75;
+    var wrongAnswer = 10;
     countDownSpan.textContent = countDown;
 
 
@@ -145,14 +131,31 @@ document.getElementById("content").addEventListener("click", function (event) {
 
     }
 
+    function checkAnswer() {
 
-    // function correctAnswer(x) {
-    //     contentId.addEventListener("click", function (event) {
-    //         event.preventDefault;
-    //         if (event.target.matches(".answers")) {
+        if (document.querySelectorAll(".answers").clicked && questionList[index].correctAnswer) {
+            score++
+            console.log(score);
+            index++
 
 
-    //         };
+        }
+        else {
+
+            countDown = countDown - 10;
+            index++
+
+
+        }
+
+    }
+
+    function clearQuestion() {
+
+
+
+    }
+
 
 
     // Timer countdown
@@ -193,8 +196,15 @@ document.getElementById("content").addEventListener("click", function (event) {
         document.querySelector("#start-quiz").style.display = "none";
         contentId.style.textAlign = "left";
         setTime();
+
+        for (var i = 0; i < questionList.length; i++) {
+
+            if (i === index) { continue }
+
+        }
         askQuestion();
     }
+
 });
 
 

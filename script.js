@@ -1,17 +1,17 @@
-// Create variable references
+// Create variable references for ID locations
 var headerEl = document.getElementById("top");
 var contentId = document.getElementById("content");
 
 // This function will handle the basic creation of an element, one attribute, and text content
-function createElement(a, b, c, d) {
-    var tmp = document.createElement(a);
-    tmp.setAttribute(b, c);
-    tmp.textContent = d;
+function createElement(element, type, value, text) {
+    var tmp = document.createElement(element);
+    tmp.setAttribute(type, value);
+    tmp.textContent = text;
     return tmp;
 };
 
 //This function will create buttons for answer later
-function createButton(x) {
+function createButton(num) {
     var tmp = document.createElement("button");
     tmp.setAttribute("type", "button");
     tmp.setAttribute("class", "answers")
@@ -20,14 +20,14 @@ function createButton(x) {
 
 };
 
-function topPosition(x) {
-    x.setAttribute("class", "top-position");
+function topPosition(id) {
+    id.setAttribute("class", "top-position");
 }
 
 // This function will be used to append the Child.
-function appendChild(x, y) {
+function appendChild(id, element) {
 
-    var tmp = x.appendChild(y);
+    var tmp = id.appendChild(element);
     return tmp;
 };
 
@@ -110,16 +110,21 @@ var questionList = [question1, question2, question3, question4, question5];
 
 // }
 
-document.getElementById("start-quiz").addEventListener("click", function (event) {
+document.getElementById("content").addEventListener("click", function (event) {
+
 
     event.preventDefault;
-
-    contentId.style.textAlign = "left";
 
     var button1 = createButton("1");
     var button2 = createButton("2");
     var button3 = createButton("3");
     var button4 = createButton("4");
+
+    var score = 0;
+    var index = 0;
+    countDown = 75;
+    countDownSpan.textContent = countDown;
+
 
     function addButtons() {
         appendChild(contentId, button1);
@@ -140,7 +145,6 @@ document.getElementById("start-quiz").addEventListener("click", function (event)
 
     }
 
-    var score = 0;
 
     // function correctAnswer(x) {
     //     contentId.addEventListener("click", function (event) {
@@ -152,9 +156,6 @@ document.getElementById("start-quiz").addEventListener("click", function (event)
 
 
     // Timer countdown
-
-    countDown = 75;
-    countDownSpan.textContent = countDown;
 
     function setTime() {
         var timerInterval = setInterval(function () {
@@ -175,21 +176,25 @@ document.getElementById("start-quiz").addEventListener("click", function (event)
 
         // Goes to the next question
     };
-    var index = 0;
 
     function askQuestion() {
 
 
-        document.getElementById("heading").textContent = questionList[index];
-        document.querySelector("#description").style.display = "none";
-        document.querySelector("#start-quiz").style.display = "none";
+        document.getElementById("heading").textContent = questionList[index].text;
         addButtons();
         addAnswers((answerList[index][0]));
 
 
     }
-    setTime();
-    askQuestion();
+
+    if (event.target.matches("button")) {
+
+        document.querySelector("#description").style.display = "none";
+        document.querySelector("#start-quiz").style.display = "none";
+        contentId.style.textAlign = "left";
+        setTime();
+        askQuestion();
+    }
 });
 
 

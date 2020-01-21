@@ -181,53 +181,59 @@ function generateQA(questionId) {
 
 function checkAnswer(questionIndex) {
 
-    var answersId = document.getElementById("answers");
+
     var answer0 = document.getElementById("option0").getAttribute("data-answer");
     var answer1 = document.getElementById("option1").getAttribute("data-answer");
     var answer2 = document.getElementById("option2").getAttribute("data-answer");
     var answer3 = document.getElementById("option3").getAttribute("data-answer");
-    answersId.addEventListener("click", function (event) {
 
-        if (event.target.hasAttribute("data-answer")) {
+    if (userChoice() === questionList[questionIndex].correctAnswer) {
+        score++
+        console.log(score)
 
-            event.preventDefault;
+    } else {
 
-            if (questionList[questionIndex].correctAnswer == answer0) {
-
-                score++;
-                console.log(score)
-                console.log("This is option0")
-
-            }
-
-            else if (questionList[questionIndex].correctAnswer == answer1) {
+        countDown = countdown - wrongAnswer;
+        countDown.textContent = countdown;
+        console.log("nope");
+    }
 
 
-                score++;
-                console.log(score)
-                console.log("This is option1")
+    function userChoice() {
+        var userInput = "";
 
+        if (event.target.matches("#option0")) {
+            console.log(answer0)
+            userInput = answer0
+            console.log("This is option0")
 
-            } else if (questionList[questionIndex].correctAnswer == answer2) {
-
-
-                score++;
-                console.log(score)
-                console.log("This is option2")
-
-            } else if (questionList[questionIndex].correctAnswer == answer3) {
-
-
-                score++;
-                console.log(score)
-                console.log("This is option3")
-
-            } else {
-
-                console.log(score)
-            }
         }
-    });
+
+        else if (event.target.matches("#option1")) {
+
+            console.log(answer1)
+            userInput = answer1
+            console.log("This is option1")
+
+
+        } else if (event.target.matches("#option2")) {
+
+            console.log(answer2)
+            userInput = answer2
+            console.log("This is option2")
+
+        } else if (event.target.matches("#option3")) {
+
+            console.log(answer3)
+            userInput = answer3
+            console.log("This is option3")
+
+        }
+        console.log(userInput)
+        return userInput
+    }
+
+
 }
 
 
@@ -291,6 +297,11 @@ document.getElementById("start-quiz").addEventListener("click", function (event)
     createAnswers();
     generateQA(0);
 
-    checkAnswer(0)
+    var answersId = document.getElementById("answers");
 
+    answersId.addEventListener("click", function (event) {
+
+        checkAnswer(0)
+
+    });
 });

@@ -2,6 +2,7 @@
 var headerEl = document.getElementById("top");
 var contentId = document.getElementById("content");
 
+
 // This function will handle the basic creation of an element, one attribute, and text content
 function createElement(element, type, value, text) {
     var tmp = document.createElement(element);
@@ -23,7 +24,8 @@ function createButton(idValue) {
 function createSpan(idValue) {
 
     var tmp = document.createElement("span");
-    tmp.setAttribute("id", "option" + idValue);
+    tmp.setAttribute("data-answer", "option" + idValue);
+    tmp.setAttribute("id", "option" + idValue)
     return tmp;
 
 }
@@ -73,32 +75,32 @@ appendChild(contentId, startButton);
 var question1 = {
     text: "Commonly used data types do NOT include:",
     choices: ["1 - Booleans", "2 - Alerts", "3 - Strings", "4 - Numbers"],
-    correctAnswer: "2 - Alerts"
+    correctAnswer: "option1",
 };
 
 var question2 = {
 
     text: "The condition of an if/else statement is enclosed within ______.",
     choices: ["1 - Quotes", "2 - Curly Brackets", "3 - Parentheses", "4 - Square Brackets"],
-    correctAnswer: "3 - Parentheses"
+    correctAnswer: "option2",
 };
 
 var question3 = {
     text: "Arrays in Javascript can be used to store ______.",
     choices: ["1 - Numbers and strings", "2 - Other Arrays", "3 - Booleans", "4 - All of the above",],
-    correctAnswer: "4 - All of the above"
+    correctAnswer: "option3",
 };
 
 var question4 = {
     text: "String values must be enclosed within ______ when being assigned to variables.",
     choices: ["1 - Quotes", "2 - Curly Brackets", "3 - Commas", "4 - Parentheses"],
-    correctAnswer: "1 - Quotes"
+    correctAnswer: "option0",
 };
 
 var question5 = {
     text: "A very useful tool used during development and debugging for printing content to the debugger is:",
     choices: ["1 - Javascript", "2 - console.log", "3 - Terminal/bash", "4 - For loops"],
-    correctAnswer: "2 - console.log"
+    correctAnswer: "option1",
 };
 
 var questionList = [question1, question2, question3, question4, question5];
@@ -134,18 +136,25 @@ function setTime() {
 
         if (countDown === 0) {
             clearInterval(timerInterval);
-            gameOver()
         }
 
     }, 1000);
 };
 
-function addAnswers(choices) {
+function createAnswers() {
 
-    appendChild(contentId, button0);
-    appendChild(contentId, button1);
-    appendChild(contentId, button2);
-    appendChild(contentId, button3);
+
+    var answers = createElement("div", "id", "answers")
+    appendChild(contentId, answers);
+};
+
+function addAnswers(choices) {
+    var answersDiv = document.getElementById("answers");
+
+    appendChild(answersDiv, button0);
+    appendChild(answersDiv, button1);
+    appendChild(answersDiv, button2);
+    appendChild(answersDiv, button3);
 
 
     for (var i = 0; i < choices.length; i++) {
@@ -154,12 +163,10 @@ function addAnswers(choices) {
         textSpan.textContent = choices[i];
         appendChild(document.getElementById("btn" + i), textSpan)
 
-
     }
 
-
-
 }
+
 
 function generateQA(questionId) {
 
@@ -172,29 +179,95 @@ function generateQA(questionId) {
 
 };
 
-function selection(questionIndex) {
+function checkAnswer(questionIndex) {
 
-    var answers = questionList[questionIndex].choices;
-    var correct = questionList[questionIndex].correctAnswer;
-    for (var i = 0; i < answers.length; i++) {
-        var button = document.getElementById("btn" + i);
-        button.addEventListener("click", function (event) {
+    var answersId = document.getElementById("answers");
+    var answer0 = document.getElementById("option0").getAttribute("data-answer");
+    var answer1 = document.getElementById("option1").getAttribute("data-answer");
+    var answer2 = document.getElementById("option2").getAttribute("data-answer");
+    var answer3 = document.getElementById("option3").getAttribute("data-answer");
+    answersId.addEventListener("click", function (event) {
+
+        if (event.target.hasAttribute("data-answer")) {
+
             event.preventDefault;
-            if (button.textContent === correct) {
-                score++;
-                console.log(score);
 
-            } else {
-                console.log(score);
+            if (questionList[questionIndex].correctAnswer == answer0) {
+
+                score++;
+                console.log(score)
+                console.log("This is option0")
+
             }
 
-        });
+            else if (questionList[questionIndex].correctAnswer == answer1) {
 
-    };
-    // clearAnswers();
 
+                score++;
+                console.log(score)
+                console.log("This is option1")
+
+
+            } else if (questionList[questionIndex].correctAnswer == answer2) {
+
+
+                score++;
+                console.log(score)
+                console.log("This is option2")
+
+            } else if (questionList[questionIndex].correctAnswer == answer3) {
+
+
+                score++;
+                console.log(score)
+                console.log("This is option3")
+
+            } else {
+
+                console.log(score)
+            }
+        }
+    });
 }
 
+
+
+
+
+
+
+
+
+
+// function selection(questionIndex) {
+
+//     for (var i = 0; i < questionList[questionIndex].choices.length; i++) {
+//         var select = document.getElementById("btn" + i);
+
+//         var choice = "option" + i
+
+//         console.log(select);
+//         var options = document.getElementById(choice);
+//         console.log(options);
+
+//         console.log(choice)
+//         console.log(document.getElementById(choice).textContent)
+//         console.log(questionList[questionIndex].correctAnswer)
+//         if (this.textContent === questionList[questionIndex].correctAnswer) {
+//             score++;
+//             console.log(score);
+
+//         } else {
+//             console.log(score);
+//         };
+
+//     };
+
+// };
+
+
+
+// clearAnswers();
 // function clearAnswers() {
 
 //     for (var i = 0; i < 5; i++) {
@@ -207,6 +280,7 @@ function selection(questionIndex) {
 document.getElementById("start-quiz").addEventListener("click", function (event) {
 
     event.preventDefault;
+    event.stopPropagation;
 
     countDown = 75;
     countDownSpan.textContent = countDown;
@@ -214,7 +288,9 @@ document.getElementById("start-quiz").addEventListener("click", function (event)
     document.querySelector("#start-quiz").style.display = "none";
     contentId.style.textAlign = "left";
     setTime();
-
+    createAnswers();
     generateQA(0);
-    selection(0);
+
+    checkAnswer(0)
+
 });

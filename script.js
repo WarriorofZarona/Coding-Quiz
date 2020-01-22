@@ -86,16 +86,18 @@ function startQuiz(event) {
     countDownSpan.textContent = countDown;
 
     // Hiding description and quiz button
-
     document.querySelector("#description").style.display = "none";
     document.querySelector("#start-quiz").style.display = "none";
     contentId.style.textAlign = "left";
+
     // Running time
-
     setTime();
-    //Creating Answer buttons
 
+
+    //Creating Answer buttons
     createAnswers();
+
+
     //Rendering first question, increased by currentIndexQuestion for next question
     renderQuestion();
 
@@ -143,6 +145,8 @@ function startQuiz(event) {
 
             appendChild(document.getElementById("btn" + i), textSpan)
         };
+
+
     };
 
 
@@ -176,12 +180,13 @@ function startQuiz(event) {
         if (userInput === q.correctAnswer) {
             score++
             console.log("You got a point! Score is now " + score)
+            displayCorrect();
 
         } else {
             console.log(userInput + " does not equal " + q.correctAnswer)
             countDown = countDown - wrongAnswer;
             countDown.textContent = countDown;
-
+            displayWrong()
 
         }
 
@@ -193,6 +198,53 @@ function startQuiz(event) {
             console.log("Score will be shown here");
 
         }
+    };
+
+    function displayCorrect() {
+
+        var correct = createElement("h3", "id", "correct", "Correct!");
+
+        appendChild(document.body, correct);
+
+
+        timer = 1;
+
+        var timerInterval = setInterval(function () {
+
+            timer--;
+
+            if (timer === 0) {
+                clearInterval(timerInterval);
+                var element = document.getElementById("correct");
+                element.parentNode.removeChild(element);
+                timer = 1;
+
+
+            };
+        }, 1000);
+    };
+
+    function displayWrong() {
+
+        var wrong = createElement("h3", "id", "wrong", "Wrong!")
+
+        appendChild(document.body, wrong);
+
+        timer = 1;
+
+        var timerInterval = setInterval(function () {
+
+            timer--;
+
+            if (timer === 0) {
+                clearInterval(timerInterval);
+                var element = document.getElementById("wrong");
+                element.parentNode.removeChild(element);
+                timer = 1;
+
+
+            }
+        }, 1000);
     };
 
     function gameOver() {

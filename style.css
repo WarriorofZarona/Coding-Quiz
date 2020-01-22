@@ -38,3 +38,15 @@ button {
 .answers {
     display: block;
 }
+
+h3 {
+    text-align: center;
+}
+
+#correct {
+    color: green;
+}
+
+#wrong {
+    color: red;
+}

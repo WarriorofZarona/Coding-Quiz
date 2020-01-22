@@ -1,6 +1,17 @@
-// Create variable references for ID locations
+// Create variable references 
 var headerEl = document.getElementById("top");
 var contentId = document.getElementById("content");
+
+var button0 = createButton("btn0");
+var button1 = createButton("btn1");
+var button2 = createButton("btn2");
+var button3 = createButton("btn3");
+
+var score = 0;
+var currentQuestionIndex = 0;
+var wrongAnswer = 10;
+var isButtonClick = false;
+
 
 
 // This function will handle the basic creation of an element, one attribute, and text content
@@ -100,6 +111,8 @@ function checkAnswer(questionIndex) {
     var answer2 = document.getElementById("option2").getAttribute("data-answer");
     var answer3 = document.getElementById("option3").getAttribute("data-answer");
 
+    var answersId = document.getElementById("answers");
+
     if (userChoice() === questionList[questionIndex].correctAnswer) {
         score++
         console.log(score)
@@ -116,39 +129,71 @@ function checkAnswer(questionIndex) {
     function userChoice() {
         var userInput = "";
 
-        if (event.target.matches("#option0")) {
-            console.log(answer0)
-            userInput = answer0
-            console.log("This is option0")
+        answersId.addEventListener("click", function (event) {
 
-        }
+            if (event.target.matches("#option0")) {
+                console.log(answer0)
+                userInput = answer0
+                console.log("This is option0")
 
-        else if (event.target.matches("#option1")) {
+            }
 
-            console.log(answer1)
-            userInput = answer1
-            console.log("This is option1")
+            else if (event.target.matches("#option1")) {
+
+                console.log(answer1)
+                userInput = answer1
+                console.log("This is option1")
 
 
-        } else if (event.target.matches("#option2")) {
+            } else if (event.target.matches("#option2")) {
 
-            console.log(answer2)
-            userInput = answer2
-            console.log("This is option2")
+                console.log(answer2)
+                userInput = answer2
+                console.log("This is option2")
 
-        } else if (event.target.matches("#option3")) {
+            } else if (event.target.matches("#option3")) {
 
-            console.log(answer3)
-            userInput = answer3
-            console.log("This is option3")
+                console.log(answer3)
+                userInput = answer3
+                console.log("This is option3")
 
-        }
+            }
+        })
         console.log(userInput)
         return userInput
     }
 
+    function clearAnswers() {
+
+        if (isButtonClick === false) {
+
+            return false
+
+        } else {
+
+            for (var i = 0; i < 4; i++) {
+                document.getElementById("btn" + i).textContent = "";
+
+            }
+            isButtonClick = false;
+            currentQuestionIndex++
+
+        }
+    }
+
 
 }
+
+
+function quiz(index) {
+
+    generateQA(index);
+    checkAnswer(index);
+    clearAnswers();
+
+}
+
+
 
 // Creating View Highscore
 var highScoreDiv = createElement("div", "id", "high-scores", "View Highscores");
@@ -211,16 +256,6 @@ var question5 = {
 
 var questionList = [question1, question2, question3, question4, question5];
 
-// }
-var button0 = createButton("btn0");
-var button1 = createButton("btn1");
-var button2 = createButton("btn2");
-var button3 = createButton("btn3");
-
-var score = 0;
-var index = 0;
-var wrongAnswer = 10;
-
 
 //Need to create a reset function that resets the page
 
@@ -240,11 +275,6 @@ document.getElementById("start-quiz").addEventListener("click", function (event)
     createAnswers();
     generateQA(0);
 
-    var answersId = document.getElementById("answers");
+    checkAnswer(0)
 
-    answersId.addEventListener("click", function (event) {
-
-        checkAnswer(0)
-
-    });
 });

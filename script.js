@@ -15,7 +15,7 @@ function createElement(element, type, value, text) {
 function createButton(idValue) {
     var tmp = document.createElement("button");
     tmp.setAttribute("type", "button");
-    tmp.setAttribute("class", "answers")
+    tmp.setAttribute("class", "answers");
     tmp.setAttribute("id", idValue);
     return tmp;
 
@@ -25,7 +25,7 @@ function createSpan(idValue) {
 
     var tmp = document.createElement("span");
     tmp.setAttribute("data-answer", "option" + idValue);
-    tmp.setAttribute("id", "option" + idValue)
+    tmp.setAttribute("id", "option" + idValue);
     return tmp;
 
 }
@@ -43,7 +43,8 @@ function startQuiz(event) {
     event.preventDefault;
 
     // Data for quiz starts here
-    // Questions
+    // Questions that get pushed into questionList array
+    questionList = [];
 
     var question0 = {
         text: "What is the correct syntax for referring to an external script called \"xxx.js \"?",
@@ -52,11 +53,14 @@ function startQuiz(event) {
 
 
     };
+    questionList.push(question0);
+
     var question1 = {
         text: "Commonly used data types do NOT include:",
         choices: ["1 - Booleans", "2 - Alerts", "3 - Strings", "4 - Numbers"],
         correctAnswer: "option1",
     };
+    questionList.push(question1);
 
     var question2 = {
 
@@ -64,30 +68,35 @@ function startQuiz(event) {
         choices: ["1 - Quotes", "2 - Curly Brackets", "3 - Parentheses", "4 - Square Brackets"],
         correctAnswer: "option2",
     };
+    questionList.push(question2);
 
     var question3 = {
         text: "Arrays in Javascript can be used to store ______.",
         choices: ["1 - Numbers and strings", "2 - Other Arrays", "3 - Booleans", "4 - All of the above",],
         correctAnswer: "option3",
     };
+    questionList.push(question3);
 
     var question4 = {
         text: "String values must be enclosed within ______ when being assigned to variables.",
         choices: ["1 - Quotes", "2 - Curly Brackets", "3 - Commas", "4 - Parentheses"],
         correctAnswer: "option0",
     };
+    questionList.push(question4);
 
     var question5 = {
         text: "A very useful tool used during development and debugging for printing content to the debugger is:",
         choices: ["1 - Javascript", "2 - console.log", "3 - Terminal/bash", "4 - For loops"],
         correctAnswer: "option1",
     };
+    questionList.push(question5);
 
     var question6 = {
         text: "Which built-in method removes the last element from an array and returns that element?",
         choices: ["1 - last()", "2 - get()", "3 - pop()", "4 - None of the above"],
         correctAnswer: "option2"
-    }
+    };
+    questionList.push(question6);
 
     var question7 = {
 
@@ -95,25 +104,27 @@ function startQuiz(event) {
         choices: ["1 - <javascript>", "2 - <scripting>", "3 - <script>", "4 - <js>"],
         correctAnswer: "option2"
 
-    }
+    };
+    questionList.push(question7);
 
     var question8 = {
         text: "How do you write \"Hello World\" in an alert box?",
         choices: ["1 - msg(\"Hello World\");", "2 - alertBox(\"Hello World\");", "3 - alert(\"Hello World\");", " 4 - msgBox(\"Hello World\");"],
         correctAnswer: "option2"
-
     };
+    questionList.push(question8);
 
     var question9 = {
         text: "How to write an IF statement in Javascript?",
         choices: ["1 - if i = 5 then", "2 - if i = 5", "3 - if i == 5 then", "4 - if (i==5)"],
         correctAnswer: "option3"
     };
-
-    var questionList = [question0, question1, question2, question3, question4, question5, question6, question7, question8, question9];
+    questionList.push(question9);
 
     // Shuffling the questions in different order
     shuffle(questionList);
+
+
 
 
     // Quiz variables

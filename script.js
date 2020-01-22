@@ -85,7 +85,7 @@ function startQuiz(event) {
     var lastQuestionIndex = questionList.length - 1
     var score = 0;
     var currentQuestionIndex = 0;
-    var q = questionList[currentQuestionIndex];
+
     var wrongAnswer = 10;
 
     countDown = 75;
@@ -96,7 +96,16 @@ function startQuiz(event) {
     setTime();
     createAnswers();
     renderQuestion();
-    clickButton();
+
+    var answerList = document.querySelectorAll(".answers");
+
+    console.log(answerList);
+
+    for (var i = 0; i < answerList.length; i++) {
+        answerList[i].addEventListener('click', checkAnswer)
+    };
+    console.log(currentQuestionIndex);
+
 
 
     // This function starts the timer counting down to 0 when the quiz starts
@@ -115,7 +124,7 @@ function startQuiz(event) {
 
     function createAnswers() {
 
-
+        var q = questionList[currentQuestionIndex];
         var answers = createElement("div", "id", "answers")
         appendChild(contentId, answers);
         var answersDiv = document.getElementById("answers");
@@ -137,6 +146,7 @@ function startQuiz(event) {
 
     function renderQuestion() {
 
+        var q = questionList[currentQuestionIndex];
         var answerText0 = document.getElementById("option0");
         var answerText1 = document.getElementById("option1");
         var answerText2 = document.getElementById("option2");
@@ -150,17 +160,9 @@ function startQuiz(event) {
 
     }
 
-    function clickButton() {
 
-        var answerList = document.querySelectorAll(".answers");
 
-        console.log(answerList);
 
-        for (var i = 0; i < answerList.length; i++) {
-            answerList[i].addEventListener('click', checkAnswer)
-        };
-        console.log(currentQuestionIndex);
-    }
 
 
 
@@ -169,7 +171,7 @@ function startQuiz(event) {
     function checkAnswer(event) {
 
         event.preventDefault();
-
+        var q = questionList[currentQuestionIndex];
         var userInput = this.children[0].getAttribute("data-answer");
 
         if (userInput === q.correctAnswer) {
@@ -193,64 +195,6 @@ function startQuiz(event) {
         }
     };
 };
-
-
-
-
-
-// function userChoice() {
-
-// }
-
-// function nextQuestion() {
-
-//     isButtonClicked = false;
-//     console.log(isButtonClicked)
-//     currentQuestionIndex++;
-//     console.log(currentQuestionIndex)
-//     document.getElementById("h1").textContent = questionList[currentQuestionIndex].text;
-//     addAnswers(questionList[currentQuestionIndex].choices);
-// }
-
-
-
-// function userChoice() {
-//     var userInput = "";
-
-//     answersId.addEventListener("click", function (event) {
-
-//         if (event.target.matches("#option0")) {
-
-//             userInput = answer0
-//             console.log(userInput);
-
-
-//         }
-
-//         else if (event.target.matches("#option1")) {
-
-//             userInput = answer1
-//             console.log(userInput);
-
-
-
-//         } else if (event.target.matches("#option2")) {
-
-//             userInput = answer2
-//             console.log(userInput);
-
-
-//         } else if (event.target.matches("#option3")) {
-
-//             userInput = answer3
-//             console.log(userInput);
-
-
-//         }
-//     })
-//     console.log(userInput)
-//     return userInput
-
 
 // Creating View Highscore
 var highScoreDiv = createElement("div", "id", "high-scores", "View Highscores");

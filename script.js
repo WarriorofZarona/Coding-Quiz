@@ -81,7 +81,6 @@ function startQuiz(event) {
     var lastQuestionIndex = questionList.length - 1
     var score = 0;
     var currentQuestionIndex = 0;
-    var wrongAnswer = 10;
     countDown = 75;
     countDownSpan.textContent = countDown;
 
@@ -120,7 +119,8 @@ function startQuiz(event) {
             if (countDown === 0) {
                 clearInterval(timerInterval);
                 gameOver()
-            } else if (currentQuestionIndex < lastQuestionIndex) {
+            }
+            if (currentQuestionIndex === lastQuestionIndex) {
                 clearInterval(timerInterval);
             }
 
@@ -174,6 +174,7 @@ function startQuiz(event) {
     function checkAnswer(event) {
 
         event.preventDefault();
+        var wrongAnswer = 10;
         var q = questionList[currentQuestionIndex];
         var userInput = this.children[0].getAttribute("data-answer");
 
@@ -253,6 +254,7 @@ function startQuiz(event) {
         questionH1.textContent = "GAME OVER"
         hideButtons();
         showScore();
+        addInitials()
     }
 
     function hideButtons() {
@@ -270,6 +272,44 @@ function startQuiz(event) {
 
         var scoreDiv = createElement("h2", "class", "score", "Score: " + score);
         appendChild(contentId, scoreDiv);
+    }
+
+    function addInitials() {
+
+        var input = createElement("input", "type", "text");
+        input.setAttribute("placeholder", "Type your initials!");
+        input.setAttribute("size", "20");
+        var submit = createElement("button", "id", "submit", "Submit");
+        var goBack = createElement("button", "id", "goBack", "Go Back");
+        var msg = createElement("div", "id", "msg")
+        appendChild(contentId, input);
+        appendChild(contentId, submit);
+        appendChild(contentId, msg)
+
+        document.getElementById("submit").addEventListener("click", function () {
+
+            if (document.querySelector("input").textContent === "") {
+
+                document.getElementById("msg").textContent = "Please type in your intials!"
+
+            } else {
+
+
+
+
+            }
+
+
+
+        }
+
+
+
+        )
+
+
+
+
     }
 
 };

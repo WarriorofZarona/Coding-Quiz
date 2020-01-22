@@ -147,8 +147,11 @@ function startQuiz(event) {
             countDown--;
             countDownSpan.textContent = countDown;
             if (countDown === 0) {
-                clearInterval(timerInterval);
                 gameOver();
+            } else if (countDown < 0) {
+                clearInterval(timerInterval);
+                countDown = 0
+                gameOver()
             }
             else if (currentQuestionIndex === lastQuestionIndex) {
                 clearInterval(timerInterval);

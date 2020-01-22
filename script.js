@@ -30,10 +30,6 @@ function createSpan(idValue) {
 
 }
 
-function topPosition(element) {
-    element.setAttribute("class", "top-position");
-}
-
 // This function will be used to append the Child.
 function appendChild(location, element) {
 
@@ -41,24 +37,134 @@ function appendChild(location, element) {
     return tmp;
 };
 
+// This function starts the timer counting down to 0 when the quiz starts
+function setTime() {
+    var timerInterval = setInterval(function () {
 
+        countDown--;
+        countDownSpan.textContent = countDown;
+
+        if (countDown === 0) {
+            clearInterval(timerInterval);
+        }
+
+    }, 1000);
+};
+
+
+// This function will put the question text into h1, and answer text into the buttons
+function generateQA(questionId) {
+
+    document.getElementById("h1").textContent = questionList[questionId].text;
+    addAnswers(questionList[questionId].choices);
+
+};
+
+// This function will create the answer div inside the content div
+
+function createAnswers() {
+
+
+    var answers = createElement("div", "id", "answers")
+    appendChild(contentId, answers);
+};
+
+// This function appends the four buttons that the user can click, along with the spans that will eventually have the answer strings
+
+function addAnswers(choices) {
+    var answersDiv = document.getElementById("answers");
+
+    appendChild(answersDiv, button0);
+    appendChild(answersDiv, button1);
+    appendChild(answersDiv, button2);
+    appendChild(answersDiv, button3);
+
+
+    for (var i = 0; i < choices.length; i++) {
+
+        var textSpan = createSpan(i);
+        textSpan.textContent = choices[i];
+        appendChild(document.getElementById("btn" + i), textSpan)
+
+    }
+
+}
+
+// This function will check the correct answer against the user choice
+
+function checkAnswer(questionIndex) {
+
+
+    var answer0 = document.getElementById("option0").getAttribute("data-answer");
+    var answer1 = document.getElementById("option1").getAttribute("data-answer");
+    var answer2 = document.getElementById("option2").getAttribute("data-answer");
+    var answer3 = document.getElementById("option3").getAttribute("data-answer");
+
+    if (userChoice() === questionList[questionIndex].correctAnswer) {
+        score++
+        console.log(score)
+
+    } else {
+
+        countDown = countdown - wrongAnswer;
+        countDown.textContent = countdown;
+        console.log("nope");
+    }
+
+    // This function returns the data-answers attribute that was clicked by the user
+
+    function userChoice() {
+        var userInput = "";
+
+        if (event.target.matches("#option0")) {
+            console.log(answer0)
+            userInput = answer0
+            console.log("This is option0")
+
+        }
+
+        else if (event.target.matches("#option1")) {
+
+            console.log(answer1)
+            userInput = answer1
+            console.log("This is option1")
+
+
+        } else if (event.target.matches("#option2")) {
+
+            console.log(answer2)
+            userInput = answer2
+            console.log("This is option2")
+
+        } else if (event.target.matches("#option3")) {
+
+            console.log(answer3)
+            userInput = answer3
+            console.log("This is option3")
+
+        }
+        console.log(userInput)
+        return userInput
+    }
+
+
+}
 
 // Creating View Highscore
 var highScoreDiv = createElement("div", "id", "high-scores", "View Highscores");
-topPosition(highScoreDiv);
+highScoreDiv.setAttribute("class", "top-position");
 appendChild(headerEl, highScoreDiv);
 
-//Creating Timer
+//Creating Timer, first a button then the span that contains the countDown variable
 var countDown = 0;
 var timerDiv = createElement("div", "id", "timer", "Timer: ");
-topPosition(timerDiv);
+timerDiv.setAttribute("class", "top-position");
 appendChild(headerEl, timerDiv);
 var countDownSpan = createElement("span", "id", "countdown", countDown);
 headerEl.childNodes[1].appendChild(countDownSpan);
 
-
-//Creating h1 for header/questions
-var questionH1 = createElement("h1", "id", "heading", "Coding Quiz Challenge");
+//Creating h1 for displaying game name/questions
+var questionH1 = createElement("h1", "id", "h1", "Coding Quiz Challenge");
 appendChild(contentId, questionH1);
 
 //Creating Description of Quiz
@@ -116,173 +222,10 @@ var index = 0;
 var wrongAnswer = 10;
 
 
+//Need to create a reset function that resets the page
 
 
-// function clearQuestion() {
-
-
-
-// }
-
-
-
-// Timer countdown
-
-function setTime() {
-    var timerInterval = setInterval(function () {
-
-        countDown--;
-        countDownSpan.textContent = countDown;
-
-        if (countDown === 0) {
-            clearInterval(timerInterval);
-        }
-
-    }, 1000);
-};
-
-function createAnswers() {
-
-
-    var answers = createElement("div", "id", "answers")
-    appendChild(contentId, answers);
-};
-
-function addAnswers(choices) {
-    var answersDiv = document.getElementById("answers");
-
-    appendChild(answersDiv, button0);
-    appendChild(answersDiv, button1);
-    appendChild(answersDiv, button2);
-    appendChild(answersDiv, button3);
-
-
-    for (var i = 0; i < choices.length; i++) {
-
-        var textSpan = createSpan(i);
-        textSpan.textContent = choices[i];
-        appendChild(document.getElementById("btn" + i), textSpan)
-
-    }
-
-}
-
-
-function generateQA(questionId) {
-
-    document.getElementById("heading").textContent = questionList[questionId].text;
-    addAnswers(questionList[questionId].choices);
-
-
-
-
-
-};
-
-function checkAnswer(questionIndex) {
-
-
-    var answer0 = document.getElementById("option0").getAttribute("data-answer");
-    var answer1 = document.getElementById("option1").getAttribute("data-answer");
-    var answer2 = document.getElementById("option2").getAttribute("data-answer");
-    var answer3 = document.getElementById("option3").getAttribute("data-answer");
-
-    if (userChoice() === questionList[questionIndex].correctAnswer) {
-        score++
-        console.log(score)
-
-    } else {
-
-        countDown = countdown - wrongAnswer;
-        countDown.textContent = countdown;
-        console.log("nope");
-    }
-
-
-    function userChoice() {
-        var userInput = "";
-
-        if (event.target.matches("#option0")) {
-            console.log(answer0)
-            userInput = answer0
-            console.log("This is option0")
-
-        }
-
-        else if (event.target.matches("#option1")) {
-
-            console.log(answer1)
-            userInput = answer1
-            console.log("This is option1")
-
-
-        } else if (event.target.matches("#option2")) {
-
-            console.log(answer2)
-            userInput = answer2
-            console.log("This is option2")
-
-        } else if (event.target.matches("#option3")) {
-
-            console.log(answer3)
-            userInput = answer3
-            console.log("This is option3")
-
-        }
-        console.log(userInput)
-        return userInput
-    }
-
-
-}
-
-
-
-
-
-
-
-
-
-
-// function selection(questionIndex) {
-
-//     for (var i = 0; i < questionList[questionIndex].choices.length; i++) {
-//         var select = document.getElementById("btn" + i);
-
-//         var choice = "option" + i
-
-//         console.log(select);
-//         var options = document.getElementById(choice);
-//         console.log(options);
-
-//         console.log(choice)
-//         console.log(document.getElementById(choice).textContent)
-//         console.log(questionList[questionIndex].correctAnswer)
-//         if (this.textContent === questionList[questionIndex].correctAnswer) {
-//             score++;
-//             console.log(score);
-
-//         } else {
-//             console.log(score);
-//         };
-
-//     };
-
-// };
-
-
-
-// clearAnswers();
-// function clearAnswers() {
-
-//     for (var i = 0; i < 5; i++) {
-
-//         document.getElementById("btn" + i).textContent = "";
-
-//     }
-
-// }
+// This starts the quiz
 document.getElementById("start-quiz").addEventListener("click", function (event) {
 
     event.preventDefault;

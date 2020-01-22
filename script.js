@@ -354,9 +354,13 @@ function startQuiz(event) {
 };
 
 // Creating View Highscore
-var highScoreDiv = createElement("div", "id", "high-scores", "View Highscores");
+var highScoreDiv = createElement("div", "id", "high-scores");
 highScoreDiv.setAttribute("class", "top-position");
 appendChild(headerEl, highScoreDiv);
+var highScoreA = createElement("a");
+highScoreA.setAttribute("href", "highscores.html");
+highScoreA.textContent = "View High Scores";
+appendChild(document.getElementById("high-scores"), highScoreA);
 
 //Creating Timer, first a button then the span that contains the countDown variable
 var countDown = 0;

@@ -75,7 +75,12 @@ function startQuiz(event) {
         correctAnswer: "option1",
     };
 
-    var questionList = [question1, question2, question3, question4, question5];
+    var question6 = {
+        text: "Which built-in method removes the last element from an array and returns that element?",
+        choices: ["1 - last()", "2 - get()", "3 - pop()", "4 - None of the above"],
+        correctAnswer: "option2"
+    }
+    var questionList = [question1, question2, question3, question4, question5, question6];
 
     // Quiz variables
     var lastQuestionIndex = questionList.length - 1

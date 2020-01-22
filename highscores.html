@@ -26,15 +26,23 @@
 
         var olTag = document.getElementById("scores");
 
+
         var highScoreList = JSON.parse(localStorage.getItem("highScores"));
 
-        for (var i = 0; i < highScoreList.length; i++) {
+        if (highScoreList == null) {
 
-            var scoreItem = document.createElement("li");
-            scoreItem.setAttribute("id", i);
-            scoreItem.textContent = highScoreList[i].initials + ": " + highScoreList[i].score
-            olTag.appendChild(scoreItem);
+            highScoreList = [];
 
+        } else {
+
+            for (var i = 0; i < highScoreList.length; i++) {
+
+                var scoreItem = document.createElement("li");
+                scoreItem.setAttribute("id", i);
+                scoreItem.textContent = highScoreList[i].initials + ": " + highScoreList[i].score
+                olTag.appendChild(scoreItem);
+
+            }
         }
 
         var btnDiv = document.createElement("div");

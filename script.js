@@ -41,7 +41,7 @@ function startQuiz(event) {
 
     var question0 = {
         text: "What is the correct syntax for referring to an external script called \"xxx.js \"?",
-        choices: ["1 - <script=\"xxx.js.\">", "2 - <script src=\"xxxs.js\">", "3 - <script name=\"xxx.js\">", "4 - <script href=\"xxx.js\'>"],
+        choices: ["1 - <script=\"xxx.js.\">", "2 - <script src=\"xxx.js\">", "3 - <script name=\"xxx.js\">", "4 - <script href=\"xxx.js\'>"],
         correctAnswer: "option1"
     };
     questionList.push(question0);

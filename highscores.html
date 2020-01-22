@@ -13,20 +13,17 @@
     <header id="top"></header>
     <div id="content"></div>
     <script>
-
+        // Building HTML content
         var contentId = document.getElementById("content")
-
         var titleH1 = document.createElement("h1")
         titleH1.textContent = "View your High Scores!"
         contentId.appendChild(titleH1);
-
         var orderedList = document.createElement("ol")
         orderedList.setAttribute("id", "scores")
         contentId.appendChild(orderedList);
-
         var olTag = document.getElementById("scores");
 
-
+        // Displaying Scores here from big to small
         var highScoreList = JSON.parse(localStorage.getItem("highScores"));
 
         if (highScoreList == null) {
@@ -45,6 +42,7 @@
             }
         }
 
+        // Displays buttons to go back to the quiz or clear the high score list
         var btnDiv = document.createElement("div");
         btnDiv.setAttribute("id", "nav");
         contentId.appendChild(btnDiv);

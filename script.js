@@ -1,4 +1,4 @@
-// Create variable references 
+// Create variable references to initial HTML locations
 var headerEl = document.getElementById("top");
 var contentId = document.getElementById("content");
 
@@ -111,8 +111,10 @@ function startQuiz(event) {
     };
 
     var questionList = [question0, question1, question2, question3, question4, question5, question6, question7, question8, question9];
+
+    // Shuffling the questions in different order
     shuffle(questionList);
-    console.log(questionList);
+
 
     // Quiz variables
     var lastQuestionIndex = questionList.length - 1
@@ -126,7 +128,7 @@ function startQuiz(event) {
     document.querySelector("#start-quiz").style.display = "none";
     contentId.style.textAlign = "left";
 
-    // Running time
+    // Running time set
     setTime();
 
 
@@ -142,8 +144,6 @@ function startQuiz(event) {
     for (var i = 0; i < answerList.length; i++) {
         answerList[i].addEventListener('click', checkAnswer)
     };
-
-
 
     // This function starts the timer counting down to 0 when the quiz starts
     // When it hits 0, the timer shows gameOver()
@@ -186,7 +186,7 @@ function startQuiz(event) {
 
     };
 
-
+    // This function will shuffle order of questions in the array
     function shuffle(array) {
 
         var currentIndex = array.length;
@@ -207,8 +207,8 @@ function startQuiz(event) {
         return array;
 
     };
-    // This function will populate the questions and answers
 
+    // This function will populate the questions and answers
     function renderQuestion() {
 
         var q = questionList[currentQuestionIndex];
@@ -237,11 +237,9 @@ function startQuiz(event) {
 
         if (userInput === q.correctAnswer) {
             score++
-            console.log("You got a point! Score is now " + score)
             displayCorrect();
 
         } else {
-            console.log(userInput + " does not equal " + q.correctAnswer)
             countDown = countDown - wrongAnswer;
             countDown.textContent = countDown;
             displayWrong()
@@ -253,11 +251,11 @@ function startQuiz(event) {
             renderQuestion();
         } else {
             gameOver();
-            console.log("Score will be shown here");
 
         }
     };
 
+    // This displays the word "Correct!"
     function displayCorrect() {
 
         var correct = createElement("h3", "id", "correct", "Correct!");
@@ -282,6 +280,7 @@ function startQuiz(event) {
         }, 1000);
     };
 
+    // This displays the word "Wrong!"
     function displayWrong() {
 
         var wrong = createElement("h3", "id", "wrong", "Wrong!")
@@ -305,6 +304,7 @@ function startQuiz(event) {
         }, 1000);
     };
 
+    // This function generates a game over screen, displaying the score and input for initials to submit to highscores.html
     function gameOver() {
         countDownSpan.textContent = 0;
         contentId.style.textAlign = "center";
@@ -314,6 +314,7 @@ function startQuiz(event) {
         addInitials()
     }
 
+    // Hides the answer buttons during Game Over screen
     function hideButtons() {
         var q = questionList[currentQuestionIndex];
         for (var i = 0; i < q.choices.length; i++) {
@@ -325,12 +326,15 @@ function startQuiz(event) {
 
     };
 
+    // This function displays the score
     function showScore() {
 
         var scoreDiv = createElement("h2", "class", "score", "Score: " + score);
         appendChild(contentId, scoreDiv);
     }
 
+    // This function handles the input for initials and puts it into local storage.
+    // It also appends data from previous scores, then sorts in score order from big to small
     function addInitials() {
 
         var input = createElement("input", "type", "text");
@@ -363,18 +367,10 @@ function startQuiz(event) {
                     highScoreList.push(newScore)
 
                     var rankedScore = highScoreList.sort(({ score: a }, { score: b }) => b - a);
-                    console.log(rankedScore);
-
-
-
-                    console.log(highScoreList)
 
                     localStorage.setItem("highScores", JSON.stringify(rankedScore));
 
                     location.href = "highscores.html";
-
-
-
 
                 }
 
@@ -385,8 +381,6 @@ function startQuiz(event) {
                     highScore.score = score;
 
                     highScoreList.push(highScore)
-
-                    console.log(highScoreList)
 
                     localStorage.setItem("highScores", JSON.stringify(highScoreList));
                     ;
@@ -442,6 +436,5 @@ var button1 = createButton("btn1");
 var button2 = createButton("btn2");
 var button3 = createButton("btn3");
 
-
-// This starts the quiz
+// Click event for starting quiz
 document.getElementById("start-quiz").addEventListener("click", startQuiz);

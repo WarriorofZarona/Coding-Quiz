@@ -2,7 +2,6 @@
 var headerEl = document.getElementById("top");
 var contentId = document.getElementById("content");
 
-
 // This function will handle the basic creation of an element, one attribute, and text content
 function createElement(element, type, value, text) {
     var tmp = document.createElement(element);
@@ -18,30 +17,24 @@ function createButton(idValue) {
     tmp.setAttribute("class", "answers");
     tmp.setAttribute("id", idValue);
     return tmp;
-
 };
 // This will create the span containing button text
 function createSpan(idValue) {
-
     var tmp = document.createElement("span");
     tmp.setAttribute("data-answer", "option" + idValue);
     tmp.setAttribute("id", "option" + idValue);
     return tmp;
-
-}
+};
 
 // This function will be used to append the Child elements
 function appendChild(location, element) {
-
     var tmp = location.appendChild(element);
     return tmp;
 };
 
 // This is a click event that will start the quiz
 function startQuiz(event) {
-
     event.preventDefault;
-
     // Data for quiz starts here
     // Questions that get pushed into questionList array
     questionList = [];
@@ -50,8 +43,6 @@ function startQuiz(event) {
         text: "What is the correct syntax for referring to an external script called \"xxx.js \"?",
         choices: ["1 - <script=\"xxx.js.\">", "2 - <script src=\"xxxs.js\">", "3 - <script name=\"xxx.js\">", "4 - <script href=\"xxx.js\'>"],
         correctAnswer: "option1"
-
-
     };
     questionList.push(question0);
 
@@ -63,7 +54,6 @@ function startQuiz(event) {
     questionList.push(question1);
 
     var question2 = {
-
         text: "The condition of an if/else statement is enclosed within ______.",
         choices: ["1 - Quotes", "2 - Curly Brackets", "3 - Parentheses", "4 - Square Brackets"],
         correctAnswer: "option2",
@@ -99,7 +89,6 @@ function startQuiz(event) {
     questionList.push(question6);
 
     var question7 = {
-
         text: "Inside which HTML element do we put the JavaScript?",
         choices: ["1 - <javascript>", "2 - <scripting>", "3 - <script>", "4 - <js>"],
         correctAnswer: "option2"
@@ -124,11 +113,8 @@ function startQuiz(event) {
     // Shuffling the questions in different order
     shuffle(questionList);
 
-
-
-
     // Quiz variables
-    var lastQuestionIndex = questionList.length - 1
+    var lastQuestionIndex = questionList.length - 1;
     var score = 0;
     var currentQuestionIndex = 0;
     countDown = 75;
@@ -142,10 +128,8 @@ function startQuiz(event) {
     // Running time set
     setTime();
 
-
     //Creating Answer buttons
     createAnswers();
-
 
     //Rendering first question, increased by currentIndexQuestion for next question
     renderQuestion();
@@ -160,158 +144,117 @@ function startQuiz(event) {
     // When it hits 0, the timer shows gameOver()
     function setTime() {
         var timerInterval = setInterval(function () {
-
             countDown--;
             countDownSpan.textContent = countDown;
-
             if (countDown === 0) {
                 clearInterval(timerInterval);
-                gameOver()
+                gameOver();
             }
-            if (currentQuestionIndex === lastQuestionIndex) {
+            else if (currentQuestionIndex === lastQuestionIndex) {
                 clearInterval(timerInterval);
             }
-
         }, 1000);
     };
 
     // Function for creating the answer buttons
     function createAnswers() {
-
         var q = questionList[currentQuestionIndex];
-        var answers = createElement("div", "id", "answers")
+        var answers = createElement("div", "id", "answers");
         appendChild(contentId, answers);
         var answersDiv = document.getElementById("answers");
         appendChild(answersDiv, button0);
         appendChild(answersDiv, button1);
         appendChild(answersDiv, button2);
         appendChild(answersDiv, button3);
-
         for (var i = 0; i < q.choices.length; i++) {
-
             var textSpan = createSpan(i);
-
             appendChild(document.getElementById("btn" + i), textSpan)
         };
-
-
     };
 
     // This function will shuffle order of questions in the array
     function shuffle(array) {
-
         var currentIndex = array.length;
         var temporaryValue, randomIndex;
-
         // While there remain elements to shuffle...
         while (0 !== currentIndex) {
             // Pick a remaining element...
             randomIndex = Math.floor(Math.random() * currentIndex);
             currentIndex -= 1;
-
             // And swap it with the current element.
             temporaryValue = array[currentIndex];
             array[currentIndex] = array[randomIndex];
             array[randomIndex] = temporaryValue;
         }
-
         return array;
-
     };
 
     // This function will populate the questions and answers
     function renderQuestion() {
-
         var q = questionList[currentQuestionIndex];
         var answerText0 = document.getElementById("option0");
         var answerText1 = document.getElementById("option1");
         var answerText2 = document.getElementById("option2");
         var answerText3 = document.getElementById("option3");
-
         questionH1.textContent = q.text;
         answerText0.textContent = q.choices[0];
         answerText1.textContent = q.choices[1];
         answerText2.textContent = q.choices[2];
         answerText3.textContent = q.choices[3];
-
-    }
-
+    };
 
     // This function will check the correct answer against the user choice
     // It will also load the next question, or if it is the last question, will show gameOver()
     function checkAnswer(event) {
-
         event.preventDefault();
         var wrongAnswer = 10;
         var q = questionList[currentQuestionIndex];
         var userInput = this.children[0].getAttribute("data-answer");
-
         if (userInput === q.correctAnswer) {
-            score++
+            score++;
             displayCorrect();
-
         } else {
             countDown = countDown - wrongAnswer;
             countDown.textContent = countDown;
-            displayWrong()
-
-        }
-
+            displayWrong();
+        };
         if (currentQuestionIndex < lastQuestionIndex) {
             currentQuestionIndex++;
             renderQuestion();
         } else {
             gameOver();
-
-        }
+        };
     };
 
     // This displays the word "Correct!"
     function displayCorrect() {
-
         var correct = createElement("h3", "id", "correct", "Correct!");
-
         appendChild(document.body, correct);
-
-
         timer = 1;
-
         var timerInterval = setInterval(function () {
-
             timer--;
-
             if (timer === 0) {
                 clearInterval(timerInterval);
                 var element = document.getElementById("correct");
                 element.parentNode.removeChild(element);
                 timer = 1;
-
-
             };
         }, 1000);
     };
 
     // This displays the word "Wrong!"
     function displayWrong() {
-
         var wrong = createElement("h3", "id", "wrong", "Wrong!")
-
         appendChild(document.body, wrong);
-
         timer = 1;
-
         var timerInterval = setInterval(function () {
-
             timer--;
-
             if (timer === 0) {
                 clearInterval(timerInterval);
                 var element = document.getElementById("wrong");
                 element.parentNode.removeChild(element);
                 timer = 1;
-
-
-            }
+            };
         }, 1000);
     };
 
@@ -329,86 +272,55 @@ function startQuiz(event) {
     function hideButtons() {
         var q = questionList[currentQuestionIndex];
         for (var i = 0; i < q.choices.length; i++) {
-
             document.getElementById("btn" + i).style.display = "none";
-
-        }
-
-
+        };
     };
 
     // This function displays the score
     function showScore() {
-
         var scoreDiv = createElement("h2", "class", "score", "Score: " + score);
         appendChild(contentId, scoreDiv);
-    }
+    };
 
     // This function handles the input for initials and puts it into local storage.
     // It also appends data from previous scores, then sorts in score order from big to small
     function addInitials() {
-
         var input = createElement("input", "type", "text");
         input.setAttribute("id", "input");
         input.setAttribute("placeholder", "Type your initials!");
         input.setAttribute("size", "20");
         var submit = createElement("button", "id", "submit", "Submit");
-        var msg = createElement("div", "id", "msg")
+        var msg = createElement("div", "id", "msg");
         appendChild(contentId, input);
         appendChild(contentId, submit);
-        appendChild(contentId, msg)
+        appendChild(contentId, msg);
 
         document.getElementById("submit").addEventListener("click", function () {
-
             if (document.getElementById("input").value == "") {
-
                 document.getElementById("msg").textContent = "Please type in your initials!"
-
             } else {
-
-                var highScoreList = JSON.parse(localStorage.getItem("highScores"))
-
+                var highScoreList = JSON.parse(localStorage.getItem("highScores"));
                 if (highScoreList == null) {
-
                     var highScoreList = [];
                     var newScore = new Object();
-                    newScore.initials = document.getElementById("input").value
+                    newScore.initials = document.getElementById("input").value;
                     newScore.score = score;
-
-                    highScoreList.push(newScore)
-
+                    highScoreList.push(newScore);
                     var rankedScore = highScoreList.sort(({ score: a }, { score: b }) => b - a);
-
                     localStorage.setItem("highScores", JSON.stringify(rankedScore));
-
                     location.href = "highscores.html";
-
                 }
-
                 else {
-
                     var highScore = new Object();
-                    highScore.initials = document.getElementById("input").value
+                    highScore.initials = document.getElementById("input").value;
                     highScore.score = score;
-
-                    highScoreList.push(highScore)
-
+                    highScoreList.push(highScore);
                     localStorage.setItem("highScores", JSON.stringify(highScoreList));
-                    ;
-                }
-
+                };
                 location.href = "highscores.html"
-            }
-
-
-
-        })
-
-
-
-
-    }
-
+            };
+        });
+    };
 };
 
 // Creating View Highscore

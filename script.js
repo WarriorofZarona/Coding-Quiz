@@ -277,10 +277,10 @@ function startQuiz(event) {
     function addInitials() {
 
         var input = createElement("input", "type", "text");
+        input.setAttribute("id", "input");
         input.setAttribute("placeholder", "Type your initials!");
         input.setAttribute("size", "20");
         var submit = createElement("button", "id", "submit", "Submit");
-        var goBack = createElement("button", "id", "goBack", "Go Back");
         var msg = createElement("div", "id", "msg")
         appendChild(contentId, input);
         appendChild(contentId, submit);
@@ -288,24 +288,63 @@ function startQuiz(event) {
 
         document.getElementById("submit").addEventListener("click", function () {
 
-            if (document.querySelector("input").textContent === "") {
+            if (document.getElementById("input").value == "") {
 
-                document.getElementById("msg").textContent = "Please type in your intials!"
+                document.getElementById("msg").textContent = "Please type in your initials!"
 
             } else {
 
+                var highScoreList = JSON.parse(localStorage.getItem("highScores"))
+
+                if (highScoreList == null) {
+
+                    var highScoreList = [];
+                    var newScore = new Object();
+                    newScore.initials = document.getElementById("input").value
+                    newScore.score = score;
+
+                    highScoreList.push(newScore)
+
+                    var rankedScore = highScoreList.sort(({ score: a }, { score: b }) => b - a);
+                    console.log(rankedScore);
 
 
 
+                    console.log(highScoreList)
+
+                    localStorage.setItem("highScores", JSON.stringify(rankedScore));
+
+                    location.href = "highscores.html";
+
+
+
+
+                }
+
+                else {
+
+                    var highScore = new Object();
+                    highScore.initials = document.getElementById("input").value
+                    highScore.score = score;
+
+                    highScoreList.push(highScore)
+
+                    console.log(highScoreList)
+
+                    localStorage.setItem("highScores", JSON.stringify(highScoreList));
+                    ;
+                }
+
+                location.href = "highscores.html"
             }
 
 
 
-        }
+        })
 
 
 
-        )
+
 
 
 

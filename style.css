@@ -50,3 +50,11 @@ h3 {
 #wrong {
     color: red;
 }
+
+ol {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 0 auto;
+    width: 25%;
+    text-align: left;
+}

@@ -116,10 +116,10 @@ function startQuiz(event) {
             countDownSpan.textContent = countDown;
 
             if (countDown === 0) {
-                countDown = 0;
-                countDownSpan.textContent = countDown;
                 clearInterval(timerInterval);
                 gameOver()
+            } else if (currentQuestionIndex < lastQuestionIndex) {
+                clearInterval(timerInterval);
             }
 
         }, 1000);
@@ -196,8 +196,11 @@ function startQuiz(event) {
     };
 
     function gameOver() {
+        countDownSpan.textContent = 0;
+        contentId.style.textAlign = "center";
         questionH1.textContent = "GAME OVER"
         hideButtons();
+        showScore();
     }
 
     function hideButtons() {
@@ -210,6 +213,12 @@ function startQuiz(event) {
 
 
     };
+
+    function showScore() {
+
+        var scoreDiv = createElement("h2", "class", "score", "Score: " + score);
+        appendChild(contentId, scoreDiv);
+    }
 
 };
 

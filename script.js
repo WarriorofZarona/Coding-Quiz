@@ -44,6 +44,14 @@ function startQuiz(event) {
 
     // Data for quiz starts here
     // Questions
+
+    var question0 = {
+        text: "What is the correct syntax for referring to an external script called \"xxx.js \"?",
+        choices: ["1 - <script=\"xxx.js.\">", "2 - <script src=\"xxxs.js\">", "3 - <script name=\"xxx.js\">", "4 - <script href=\"xxx.js\'>"],
+        correctAnswer: "option1"
+
+
+    };
     var question1 = {
         text: "Commonly used data types do NOT include:",
         choices: ["1 - Booleans", "2 - Alerts", "3 - Strings", "4 - Numbers"],
@@ -80,7 +88,29 @@ function startQuiz(event) {
         choices: ["1 - last()", "2 - get()", "3 - pop()", "4 - None of the above"],
         correctAnswer: "option2"
     }
-    var questionList = [question1, question2, question3, question4, question5, question6];
+
+    var question7 = {
+
+        text: "Inside which HTML element do we put the JavaScript?",
+        choices: ["1 - <javascript>", "2 - <scripting>", "3 - <script>", "4 - <js>"],
+        correctAnswer: "option2"
+
+    }
+
+    var question8 = {
+        text: "How do you write \"Hello World\" in an alert box?",
+        choices: ["1 - msg(\"Hello World\");", "2 - alertBox(\"Hello World\");", "3 - alert(\"Hello World\");", " 4 - msgBox(\"Hello World\");"],
+        correctAnswer: "option2"
+
+    };
+
+    var question9 = {
+        text: "How to write an IF statement in Javascript?",
+        choices: ["1 - if i = 5 then", "2 - if i = 5", "3 - if i == 5 then", "4 - if (i==5)"],
+        correctAnswer: "option3"
+    };
+
+    var questionList = [question0, question1, question2, question3, question4, question5, question6, question7, question8, question9];
     shuffle(questionList);
     console.log(questionList);
 

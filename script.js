@@ -81,6 +81,8 @@ function startQuiz(event) {
         correctAnswer: "option2"
     }
     var questionList = [question1, question2, question3, question4, question5, question6];
+    shuffle(questionList);
+    console.log(questionList);
 
     // Quiz variables
     var lastQuestionIndex = questionList.length - 1
@@ -155,6 +157,26 @@ function startQuiz(event) {
     };
 
 
+    function shuffle(array) {
+
+        var currentIndex = array.length;
+        var temporaryValue, randomIndex;
+
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+
+        return array;
+
+    };
     // This function will populate the questions and answers
 
     function renderQuestion() {
@@ -346,10 +368,6 @@ function startQuiz(event) {
 
 
         })
-
-
-
-
 
 
 

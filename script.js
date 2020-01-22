@@ -3,12 +3,6 @@ var headerEl = document.getElementById("top");
 var contentId = document.getElementById("content");
 
 
-var button0 = createButton("btn0");
-var button1 = createButton("btn1");
-var button2 = createButton("btn2");
-var button3 = createButton("btn3");
-
-
 // This function will handle the basic creation of an element, one attribute, and text content
 function createElement(element, type, value, text) {
     var tmp = document.createElement(element);
@@ -26,7 +20,7 @@ function createButton(idValue) {
     return tmp;
 
 };
-
+// This will create the span containing button text
 function createSpan(idValue) {
 
     var tmp = document.createElement("span");
@@ -36,13 +30,14 @@ function createSpan(idValue) {
 
 }
 
-// This function will be used to append the Child.
+// This function will be used to append the Child elements
 function appendChild(location, element) {
 
     var tmp = location.appendChild(element);
     return tmp;
 };
 
+// This is a click event that will start the quiz
 function startQuiz(event) {
 
     event.preventDefault;
@@ -82,33 +77,38 @@ function startQuiz(event) {
 
     var questionList = [question1, question2, question3, question4, question5];
 
+    // Quiz variables
     var lastQuestionIndex = questionList.length - 1
     var score = 0;
     var currentQuestionIndex = 0;
-
     var wrongAnswer = 10;
-
     countDown = 75;
     countDownSpan.textContent = countDown;
+
+    // Hiding description and quiz button
+
     document.querySelector("#description").style.display = "none";
     document.querySelector("#start-quiz").style.display = "none";
     contentId.style.textAlign = "left";
+    // Running time
+
     setTime();
+    //Creating Answer buttons
+
     createAnswers();
+    //Rendering first question, increased by currentIndexQuestion for next question
     renderQuestion();
 
+    //This will target the answer buttons for user input and checking answer
     var answerList = document.querySelectorAll(".answers");
-
-    console.log(answerList);
-
     for (var i = 0; i < answerList.length; i++) {
         answerList[i].addEventListener('click', checkAnswer)
     };
-    console.log(currentQuestionIndex);
 
 
 
     // This function starts the timer counting down to 0 when the quiz starts
+    // When it hits 0, the timer shows gameOver()
     function setTime() {
         var timerInterval = setInterval(function () {
 
@@ -116,12 +116,16 @@ function startQuiz(event) {
             countDownSpan.textContent = countDown;
 
             if (countDown === 0) {
+                countDown = 0;
+                countDownSpan.textContent = countDown;
                 clearInterval(timerInterval);
+                gameOver()
             }
 
         }, 1000);
     };
 
+    // Function for creating the answer buttons
     function createAnswers() {
 
         var q = questionList[currentQuestionIndex];
@@ -142,7 +146,7 @@ function startQuiz(event) {
     };
 
 
-    // This function will create the answer div inside the content div
+    // This function will populate the questions and answers
 
     function renderQuestion() {
 
@@ -161,13 +165,8 @@ function startQuiz(event) {
     }
 
 
-
-
-
-
-
     // This function will check the correct answer against the user choice
-
+    // It will also load the next question, or if it is the last question, will show gameOver()
     function checkAnswer(event) {
 
         event.preventDefault();
@@ -190,10 +189,28 @@ function startQuiz(event) {
             currentQuestionIndex++;
             renderQuestion();
         } else {
-            //showscore
+            gameOver();
             console.log("Score will be shown here");
+
         }
     };
+
+    function gameOver() {
+        questionH1.textContent = "GAME OVER"
+        hideButtons();
+    }
+
+    function hideButtons() {
+        var q = questionList[currentQuestionIndex];
+        for (var i = 0; i < q.choices.length; i++) {
+
+            document.getElementById("btn" + i).style.display = "none";
+
+        }
+
+
+    };
+
 };
 
 // Creating View Highscore
@@ -222,8 +239,11 @@ var startButton = createElement("button", "id", "start-quiz", "Start Quiz");
 startButton.setAttribute("type", "button");
 appendChild(contentId, startButton);
 
-
-//Need to create a reset function that resets the page
+// Creating answer buttons
+var button0 = createButton("btn0");
+var button1 = createButton("btn1");
+var button2 = createButton("btn2");
+var button3 = createButton("btn3");
 
 
 // This starts the quiz

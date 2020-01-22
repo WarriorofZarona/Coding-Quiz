@@ -2,6 +2,7 @@
 var headerEl = document.getElementById("top");
 var contentId = document.getElementById("content");
 
+
 var button0 = createButton("btn0");
 var button1 = createButton("btn1");
 var button2 = createButton("btn2");
@@ -81,7 +82,7 @@ function startQuiz(event) {
 
     var questionList = [question1, question2, question3, question4, question5];
 
-
+    var lastQuestionIndex = questionList.length - 1
     var score = 0;
     var currentQuestionIndex = 0;
     var q = questionList[currentQuestionIndex];
@@ -95,20 +96,7 @@ function startQuiz(event) {
     setTime();
     createAnswers();
     renderQuestion();
-    checkAnswer();
-    console.log(currentQuestionIndex);
-
-
-    // if (isButtonClicked) {
-
-    //     console.log("Next question is not running")
-
-    // } else {
-
-    //     nextQuestion();
-    // }
-
-
+    clickButton();
 
 
     // This function starts the timer counting down to 0 when the quiz starts
@@ -124,24 +112,6 @@ function startQuiz(event) {
 
         }, 1000);
     };
-
-    // This function will create the answer div inside the content div
-
-    function renderQuestion() {
-
-        var answerText0 = document.getElementById("option0");
-        var answerText1 = document.getElementById("option1");
-        var answerText2 = document.getElementById("option2");
-        var answerText3 = document.getElementById("option3");
-
-        // var isButtonClicked = false;
-
-        questionH1.textContent = q.text;
-        answerText0.textContent = q.choices[0];
-        answerText1.textContent = q.choices[1];
-        answerText2.textContent = q.choices[2];
-        answerText3.textContent = q.choices[3];
-    }
 
     function createAnswers() {
 
@@ -161,124 +131,126 @@ function startQuiz(event) {
             appendChild(document.getElementById("btn" + i), textSpan)
         };
     };
-    // This function appends the four buttons that the user can click, along with the spans that will eventually have the answer strings
-
-    function addAnswers(index) {
 
 
+    // This function will create the answer div inside the content div
 
+    function renderQuestion() {
+
+        var answerText0 = document.getElementById("option0");
+        var answerText1 = document.getElementById("option1");
+        var answerText2 = document.getElementById("option2");
+        var answerText3 = document.getElementById("option3");
+
+        questionH1.textContent = q.text;
+        answerText0.textContent = q.choices[0];
+        answerText1.textContent = q.choices[1];
+        answerText2.textContent = q.choices[2];
+        answerText3.textContent = q.choices[3];
+
+    }
+
+    function clickButton() {
+
+        var answerList = document.querySelectorAll(".answers");
+
+        console.log(answerList);
+
+        for (var i = 0; i < answerList.length; i++) {
+            answerList[i].addEventListener('click', checkAnswer)
+        };
+        console.log(currentQuestionIndex);
     }
 
 
 
     // This function will check the correct answer against the user choice
 
-    function checkAnswer() {
+    function checkAnswer(event) {
 
-        var answersId = document.getElementById("answers");
-        var answer0 = document.getElementById("option0").getAttribute("data-answer");
-        var answer1 = document.getElementById("option1").getAttribute("data-answer");
-        var answer2 = document.getElementById("option2").getAttribute("data-answer");
-        var answer3 = document.getElementById("option3").getAttribute("data-answer");
-        var userInput = "";
+        event.preventDefault();
 
-        answersId.addEventListener("click", function (event) {
+        var userInput = this.children[0].getAttribute("data-answer");
 
-            event.preventDefault();
+        if (userInput === q.correctAnswer) {
+            score++
+            console.log("You got a point! Score is now " + score)
 
-            if (event.target.matches("#option0")) {
-
-                userInput = answer0
-
-            }
-
-            else if (event.target.matches("#option1")) {
-
-                userInput = answer1
+        } else {
+            console.log(userInput + " does not equal " + q.correctAnswer)
+            countDown = countDown - wrongAnswer;
+            countDown.textContent = countDown;
 
 
-            } else if (event.target.matches("#option2")) {
+        }
 
-                userInput = answer2
-            } else if (event.target.matches("#option3")) {
-
-                userInput = answer3
-
-            }
-
-            if (userInput === q.correctAnswer) {
-                score++
-                console.log(score)
-
-            } else {
-                console.log(userInput + " does not equal " + q.correctAnswer)
-                countDown = countDown - wrongAnswer;
-                countDown.textContent = countDown;
-
-
-            }
-        });
-
+        if (currentQuestionIndex < lastQuestionIndex) {
+            currentQuestionIndex++;
+            renderQuestion();
+        } else {
+            //showscore
+            console.log("Score will be shown here");
+        }
     };
-
-
-
-    // function userChoice() {
-
-    // }
-
-    // function nextQuestion() {
-
-    //     isButtonClicked = false;
-    //     console.log(isButtonClicked)
-    //     currentQuestionIndex++;
-    //     console.log(currentQuestionIndex)
-    //     document.getElementById("h1").textContent = questionList[currentQuestionIndex].text;
-    //     addAnswers(questionList[currentQuestionIndex].choices);
-    // }
-
-
-
-    function userChoice() {
-        var userInput = "";
-
-        answersId.addEventListener("click", function (event) {
-
-            if (event.target.matches("#option0")) {
-
-                userInput = answer0
-                console.log(userInput);
-
-
-            }
-
-            else if (event.target.matches("#option1")) {
-
-                userInput = answer1
-                console.log(userInput);
-
-
-
-            } else if (event.target.matches("#option2")) {
-
-                userInput = answer2
-                console.log(userInput);
-
-
-            } else if (event.target.matches("#option3")) {
-
-                userInput = answer3
-                console.log(userInput);
-
-
-            }
-        })
-        console.log(userInput)
-        return userInput
-
-    };
-
 };
+
+
+
+
+
+// function userChoice() {
+
+// }
+
+// function nextQuestion() {
+
+//     isButtonClicked = false;
+//     console.log(isButtonClicked)
+//     currentQuestionIndex++;
+//     console.log(currentQuestionIndex)
+//     document.getElementById("h1").textContent = questionList[currentQuestionIndex].text;
+//     addAnswers(questionList[currentQuestionIndex].choices);
+// }
+
+
+
+// function userChoice() {
+//     var userInput = "";
+
+//     answersId.addEventListener("click", function (event) {
+
+//         if (event.target.matches("#option0")) {
+
+//             userInput = answer0
+//             console.log(userInput);
+
+
+//         }
+
+//         else if (event.target.matches("#option1")) {
+
+//             userInput = answer1
+//             console.log(userInput);
+
+
+
+//         } else if (event.target.matches("#option2")) {
+
+//             userInput = answer2
+//             console.log(userInput);
+
+
+//         } else if (event.target.matches("#option3")) {
+
+//             userInput = answer3
+//             console.log(userInput);
+
+
+//         }
+//     })
+//     console.log(userInput)
+//     return userInput
+
 
 // Creating View Highscore
 var highScoreDiv = createElement("div", "id", "high-scores", "View Highscores");

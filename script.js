@@ -7,12 +7,6 @@ var button1 = createButton("btn1");
 var button2 = createButton("btn2");
 var button3 = createButton("btn3");
 
-var score = 0;
-var currentQuestionIndex = 0;
-var wrongAnswer = 10;
-var isButtonClick = false;
-
-
 
 // This function will handle the basic creation of an element, one attribute, and text content
 function createElement(element, type, value, text) {
@@ -48,54 +42,129 @@ function appendChild(location, element) {
     return tmp;
 };
 
-// This function starts the timer counting down to 0 when the quiz starts
-function setTime() {
-    var timerInterval = setInterval(function () {
+function startQuiz(event) {
 
-        countDown--;
-        countDownSpan.textContent = countDown;
+    event.preventDefault;
 
-        if (countDown === 0) {
-            clearInterval(timerInterval);
-        }
+    // Data for quiz starts here
+    // Questions
+    var question1 = {
+        text: "Commonly used data types do NOT include:",
+        choices: ["1 - Booleans", "2 - Alerts", "3 - Strings", "4 - Numbers"],
+        correctAnswer: "option1",
+    };
 
-    }, 1000);
-};
+    var question2 = {
 
+        text: "The condition of an if/else statement is enclosed within ______.",
+        choices: ["1 - Quotes", "2 - Curly Brackets", "3 - Parentheses", "4 - Square Brackets"],
+        correctAnswer: "option2",
+    };
 
-// This function will put the question text into h1, and answer text into the buttons
-function generateQA(questionId) {
+    var question3 = {
+        text: "Arrays in Javascript can be used to store ______.",
+        choices: ["1 - Numbers and strings", "2 - Other Arrays", "3 - Booleans", "4 - All of the above",],
+        correctAnswer: "option3",
+    };
 
-    document.getElementById("h1").textContent = questionList[questionId].text;
-    addAnswers(questionList[questionId].choices);
+    var question4 = {
+        text: "String values must be enclosed within ______ when being assigned to variables.",
+        choices: ["1 - Quotes", "2 - Curly Brackets", "3 - Commas", "4 - Parentheses"],
+        correctAnswer: "option0",
+    };
 
-};
+    var question5 = {
+        text: "A very useful tool used during development and debugging for printing content to the debugger is:",
+        choices: ["1 - Javascript", "2 - console.log", "3 - Terminal/bash", "4 - For loops"],
+        correctAnswer: "option1",
+    };
 
-// This function will create the answer div inside the content div
-
-function createAnswers() {
-
-
-    var answers = createElement("div", "id", "answers")
-    appendChild(contentId, answers);
-};
-
-// This function appends the four buttons that the user can click, along with the spans that will eventually have the answer strings
-
-function addAnswers(choices) {
-    var answersDiv = document.getElementById("answers");
-
-    appendChild(answersDiv, button0);
-    appendChild(answersDiv, button1);
-    appendChild(answersDiv, button2);
-    appendChild(answersDiv, button3);
+    var questionList = [question1, question2, question3, question4, question5];
 
 
-    for (var i = 0; i < choices.length; i++) {
+    var score = 0;
+    var currentQuestionIndex = 0;
+    var isButtonClicked = false;
+    var wrongAnswer = 10;
 
-        var textSpan = createSpan(i);
-        textSpan.textContent = choices[i];
-        appendChild(document.getElementById("btn" + i), textSpan)
+    countDown = 75;
+    countDownSpan.textContent = countDown;
+    document.querySelector("#description").style.display = "none";
+    document.querySelector("#start-quiz").style.display = "none";
+    contentId.style.textAlign = "left";
+    setTime();
+    createAnswers();
+    renderQuestion();
+    checkAnswer();
+    console.log(currentQuestionIndex);
+
+
+    // if (isButtonClicked) {
+
+    //     console.log("Next question is not running")
+
+    // } else {
+
+    //     nextQuestion();
+    // }
+
+
+
+
+    // This function starts the timer counting down to 0 when the quiz starts
+    function setTime() {
+        var timerInterval = setInterval(function () {
+
+            countDown--;
+            countDownSpan.textContent = countDown;
+
+            if (countDown === 0) {
+                clearInterval(timerInterval);
+            }
+
+        }, 1000);
+    };
+
+    // This function will create the answer div inside the content div
+
+    function renderQuestion() {
+
+        var q = questionList[currentQuestionIndex];
+        var answerText0 = document.getElementById("option0");
+        var answerText1 = document.getElementById("option1");
+        var answerText2 = document.getElementById("option2");
+        var answerText3 = document.getElementById("option3");
+
+        questionH1.textContent = q.text;
+        answerText0.textContent = q.choices[0];
+        answerText1.textContent = q.choices[1];
+        answerText2.textContent = q.choices[2];
+        answerText3.textContent = q.choices[3];
+    }
+
+    function createAnswers() {
+
+
+        var answers = createElement("div", "id", "answers")
+        appendChild(contentId, answers);
+        var answersDiv = document.getElementById("answers");
+        appendChild(answersDiv, button0);
+        appendChild(answersDiv, button1);
+        appendChild(answersDiv, button2);
+        appendChild(answersDiv, button3);
+
+        for (var i = 0; i < questionList[currentQuestionIndex].choices.length; i++) {
+
+            var textSpan = createSpan(i);
+
+            appendChild(document.getElementById("btn" + i), textSpan)
+        };
+    };
+    // This function appends the four buttons that the user can click, along with the spans that will eventually have the answer strings
+
+    function addAnswers(index) {
+
+
 
     }
 
@@ -103,95 +172,122 @@ function addAnswers(choices) {
 
 // This function will check the correct answer against the user choice
 
-function checkAnswer(questionIndex) {
+function checkAnswer(index) {
 
-
+    var answersId = document.querySelector("#answers");
     var answer0 = document.getElementById("option0").getAttribute("data-answer");
     var answer1 = document.getElementById("option1").getAttribute("data-answer");
     var answer2 = document.getElementById("option2").getAttribute("data-answer");
     var answer3 = document.getElementById("option3").getAttribute("data-answer");
+    var userInput = "";
 
-    var answersId = document.getElementById("answers");
+    answersId.addEventListener("click", function (event) {
 
-    if (userChoice() === questionList[questionIndex].correctAnswer) {
-        score++
-        console.log(score)
+        if (event.target.matches("#option0")) {
 
-    } else {
-
-        countDown = countdown - wrongAnswer;
-        countDown.textContent = countdown;
-        console.log("nope");
-    }
-
-    // This function returns the data-answers attribute that was clicked by the user
-
-    function userChoice() {
-        var userInput = "";
-
-        answersId.addEventListener("click", function (event) {
-
-            if (event.target.matches("#option0")) {
-                console.log(answer0)
-                userInput = answer0
-                console.log("This is option0")
-
-            }
-
-            else if (event.target.matches("#option1")) {
-
-                console.log(answer1)
-                userInput = answer1
-                console.log("This is option1")
-
-
-            } else if (event.target.matches("#option2")) {
-
-                console.log(answer2)
-                userInput = answer2
-                console.log("This is option2")
-
-            } else if (event.target.matches("#option3")) {
-
-                console.log(answer3)
-                userInput = answer3
-                console.log("This is option3")
-
-            }
-        })
-        console.log(userInput)
-        return userInput
-    }
-
-    function clearAnswers() {
-
-        if (isButtonClick === false) {
-
-            return false
-
-        } else {
-
-            for (var i = 0; i < 4; i++) {
-                document.getElementById("btn" + i).textContent = "";
-
-            }
-            isButtonClick = false;
-            currentQuestionIndex++
+            userInput = answer0
+            console.log(userInput);
+            isButtonClicked = true;
+            console.log(isButtonClicked)
 
         }
-    }
+
+        else if (event.target.matches("#option1")) {
+
+            userInput = answer1
+            console.log(userInput);
+            isButtonClicked = true;
+            console.log(isButtonClicked)
 
 
-}
+        } else if (event.target.matches("#option2")) {
+
+            userInput = answer2
+            console.log(userInput);
+            isButtonClicked = true;
+            console.log(isButtonClicked)
+
+        } else if (event.target.matches("#option3")) {
+
+            userInput = answer3
+            console.log(userInput);
+            isButtonClicked = true;
+            console.log(isButtonClicked)
+
+        }
 
 
-function quiz(index) {
+        if (isButtonClicked) {
+            if (userInput === questionList[index].correctAnswer) {
+                score++
+                console.log(score)
 
-    generateQA(index);
-    checkAnswer(index);
-    clearAnswers();
+            } else {
 
-}
+                countDown = countdown - wrongAnswer;
+                countDown.textContent = countdown;
+                console.log("nope");
+
+            }
+
+        };
+    });
+};
+
+// function userChoice() {
+
+// }
+
+// function nextQuestion() {
+
+//     isButtonClicked = false;
+//     console.log(isButtonClicked)
+//     currentQuestionIndex++;
+//     console.log(currentQuestionIndex)
+//     document.getElementById("h1").textContent = questionList[currentQuestionIndex].text;
+//     addAnswers(questionList[currentQuestionIndex].choices);
+// }
+
+
+
+function userChoice() {
+    var userInput = "";
+
+    answersId.addEventListener("click", function (event) {
+
+        if (event.target.matches("#option0")) {
+
+            userInput = answer0
+            console.log(userInput);
+            isButtonClicked = true;
+
+        }
+
+        else if (event.target.matches("#option1")) {
+
+            userInput = answer1
+            console.log(userInput);
+            isButtonClicked = true;
+
+
+        } else if (event.target.matches("#option2")) {
+
+            userInput = answer2
+            console.log(userInput);
+            isButtonClicked = true;
+
+        } else if (event.target.matches("#option3")) {
+
+            userInput = answer3
+            console.log(userInput);
+            isButtonClicked = true;
+
+        }
+    })
+    console.log(userInput)
+    return userInput
+
+};
 
 
 
@@ -221,60 +317,9 @@ var startButton = createElement("button", "id", "start-quiz", "Start Quiz");
 startButton.setAttribute("type", "button");
 appendChild(contentId, startButton);
 
-// Data for quiz starts here
-// Questions
-var question1 = {
-    text: "Commonly used data types do NOT include:",
-    choices: ["1 - Booleans", "2 - Alerts", "3 - Strings", "4 - Numbers"],
-    correctAnswer: "option1",
-};
-
-var question2 = {
-
-    text: "The condition of an if/else statement is enclosed within ______.",
-    choices: ["1 - Quotes", "2 - Curly Brackets", "3 - Parentheses", "4 - Square Brackets"],
-    correctAnswer: "option2",
-};
-
-var question3 = {
-    text: "Arrays in Javascript can be used to store ______.",
-    choices: ["1 - Numbers and strings", "2 - Other Arrays", "3 - Booleans", "4 - All of the above",],
-    correctAnswer: "option3",
-};
-
-var question4 = {
-    text: "String values must be enclosed within ______ when being assigned to variables.",
-    choices: ["1 - Quotes", "2 - Curly Brackets", "3 - Commas", "4 - Parentheses"],
-    correctAnswer: "option0",
-};
-
-var question5 = {
-    text: "A very useful tool used during development and debugging for printing content to the debugger is:",
-    choices: ["1 - Javascript", "2 - console.log", "3 - Terminal/bash", "4 - For loops"],
-    correctAnswer: "option1",
-};
-
-var questionList = [question1, question2, question3, question4, question5];
-
 
 //Need to create a reset function that resets the page
 
 
 // This starts the quiz
-document.getElementById("start-quiz").addEventListener("click", function (event) {
-
-    event.preventDefault;
-    event.stopPropagation;
-
-    countDown = 75;
-    countDownSpan.textContent = countDown;
-    document.querySelector("#description").style.display = "none";
-    document.querySelector("#start-quiz").style.display = "none";
-    contentId.style.textAlign = "left";
-    setTime();
-    createAnswers();
-    generateQA(0);
-
-    checkAnswer(0)
-
-});
+document.getElementById("start-quiz").addEventListener("click", startQuiz, true);

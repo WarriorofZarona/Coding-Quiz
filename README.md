@@ -13,7 +13,6 @@ My goal is to have the bare minimum HTML and CSS and have everything be built in
 
 --- After finishing the project --
 
-
 The questions are asked in a random order each time a user starts a quiz.
 
 The user has 75 seconds to answer 10 questions. With each wrong answer, the timer is subtracted by 10 seconds.

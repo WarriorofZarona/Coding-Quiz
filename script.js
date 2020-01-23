@@ -151,8 +151,8 @@ function startQuiz(event) {
                 gameOver();
             } else if (countDown < 0) {
                 clearInterval(timerInterval);
+                gameOver();
                 countDown = 0
-                gameOver()
             }
             else if (currentQuestionIndex === lastQuestionIndex) {
                 clearInterval(timerInterval);

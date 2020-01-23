@@ -309,14 +309,14 @@ function startQuiz(event) {
                     highScoreList.push(newScore);
                     var rankedScore = highScoreList.sort(({ score: a }, { score: b }) => b - a);
                     localStorage.setItem("highScores", JSON.stringify(rankedScore));
-                    location.href = "highscores.html";
                 }
                 else {
                     var highScore = new Object();
                     highScore.initials = document.getElementById("input").value;
                     highScore.score = score;
                     highScoreList.push(highScore);
-                    localStorage.setItem("highScores", JSON.stringify(highScoreList));
+                    var rankedScore = highScoreList.sort(({ score: a }, { score: b }) => b - a);
+                    localStorage.setItem("highScores", JSON.stringify(rankedScore));
                 };
                 location.href = "highscores.html"
             };

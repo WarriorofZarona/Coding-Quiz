@@ -193,15 +193,12 @@ function startQuiz(event) {
     // This function will populate the questions and answers
     function renderQuestion() {
         var q = questionList[currentQuestionIndex];
-        var answerText0 = document.getElementById("option0");
-        var answerText1 = document.getElementById("option1");
-        var answerText2 = document.getElementById("option2");
-        var answerText3 = document.getElementById("option3");
+
         questionH1.textContent = q.text;
-        answerText0.textContent = q.choices[0];
-        answerText1.textContent = q.choices[1];
-        answerText2.textContent = q.choices[2];
-        answerText3.textContent = q.choices[3];
+
+        for (var i = 0; i < q.choices.length; i++) {
+            document.getElementById("option" + i).textContent = q.choices[i];
+        }
     };
 
     // This function will check the correct answer against the user choice
